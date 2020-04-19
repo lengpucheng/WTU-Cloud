@@ -1,8 +1,10 @@
-package cn.hll520.wtu.cloud;
+package cn.hll520.wtu.cloud.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import cn.hll520.wtu.cloud.R;
 
 public class MainActivity extends AppCompatActivity {
 
