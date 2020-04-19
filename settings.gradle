@@ -1,0 +1,2 @@
+rootProject.name='WTUcloud'
+include ':app'
