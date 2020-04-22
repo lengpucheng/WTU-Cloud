@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 22/04/2020 17:20:56
+ Date: 22/04/2020 19:02:28
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `user`  (
   `UNAME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名',
   `SID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '学号',
   `PASSWORD` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密码',
-  `SAFETY` int(2) NOT NULL DEFAULT 0 COMMENT '权限',
+  `SAFETY` int(4) NOT NULL DEFAULT 0 COMMENT '权限',
   `PASSINFO` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '密保',
   `PASSKEY` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '答案',
   `REGTIME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '注册时间',
@@ -54,6 +54,7 @@ DROP TRIGGER IF EXISTS `delUser`;
 delimiter ;;
 CREATE TRIGGER `delUser` AFTER DELETE ON `user` FOR EACH ROW BEGIN
 DELETE FROM user_info WHERE user_info.uid=old.uid;
+DELETE FROM organ_peo WHERE organ_peo.uid=old.uid;
 END
 ;;
 delimiter ;

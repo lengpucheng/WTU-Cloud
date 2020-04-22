@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName ="COURSE_NULL")
-public class UNcourse {
+public class UNCourse {
     @PrimaryKey(autoGenerate =true)
     private int _id=0;//编号
     @ColumnInfo
@@ -27,7 +27,7 @@ public class UNcourse {
     @ColumnInfo
     private String night="0-0";//晚上
 
-    public UNcourse(){}
+    public UNCourse(){}
 
     public int get_id() {
         return _id;

@@ -2,13 +2,15 @@ package cn.hll520.wtu.cloud.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "USER_LOGIN")
 public class User {
 
     @ColumnInfo(name="login")
     private boolean login=false;//是否登录
-    @ColumnInfo(name="UID")
+    @PrimaryKey
     private int UID=0;          //UID
     @ColumnInfo(name="SID")
     private String SID="";      //学号
@@ -31,6 +33,7 @@ public class User {
     @ColumnInfo(name = "userSafety")
     private int userSafety=0;   //安全等级
 
+    @Ignore
     public User(){}
 
     public User(int UID, String password) {

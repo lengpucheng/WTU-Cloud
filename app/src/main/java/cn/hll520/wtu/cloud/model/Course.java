@@ -21,13 +21,13 @@ public class Course {
     @ColumnInfo
     private int week=1; //星期几
     @ColumnInfo
-    private int tMin=1;//开始节
+    private int tmin=1; //开始节
     @ColumnInfo
-    private int tMax=1;//结束节
+    private int tmax =1;//结束节
     @ColumnInfo
-    private int wMin=1;//开始周
+    private int wmin =1;//开始周
     @ColumnInfo
-    private int wMax=1;//结束周
+    private int wmax =1;//结束周
     @ColumnInfo
     private String teacher="";//老师
     @ColumnInfo
@@ -93,36 +93,36 @@ public class Course {
         this.week = week;
     }
 
-    public int gettMin() {
-        return tMin;
+    public int getTmin() {
+        return tmin;
     }
 
-    public void settMin(int tMin) {
-        this.tMin = tMin;
+    public void setTmin(int tmin) {
+        this.tmin = tmin;
     }
 
-    public int gettMax() {
-        return tMax;
+    public int getTmax() {
+        return tmax;
     }
 
-    public void settMax(int tMax) {
-        this.tMax = tMax;
+    public void setTmax(int tmax) {
+        this.tmax = tmax;
     }
 
-    public int getwMin() {
-        return wMin;
+    public int getWmin() {
+        return wmin;
     }
 
-    public void setwMin(int wMin) {
-        this.wMin = wMin;
+    public void setWmin(int wmin) {
+        this.wmin = wmin;
     }
 
-    public int getwMax() {
-        return wMax;
+    public int getWmax() {
+        return wmax;
     }
 
-    public void setwMax(int wMax) {
-        this.wMax = wMax;
+    public void setWmax(int wmax) {
+        this.wmax = wmax;
     }
 
     public String getTeacher() {

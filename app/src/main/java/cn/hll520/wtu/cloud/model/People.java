@@ -2,12 +2,13 @@ package cn.hll520.wtu.cloud.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "PEOPLE_INFO")
 public class People {
     @ColumnInfo
     private int who=0;   //属于谁
-    @ColumnInfo
+    @PrimaryKey
     private int UID=0;   //UID
     @ColumnInfo
     private int SID=0;  //学号

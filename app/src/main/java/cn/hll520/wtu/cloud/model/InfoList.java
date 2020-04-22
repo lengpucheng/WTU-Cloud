@@ -2,12 +2,13 @@ package cn.hll520.wtu.cloud.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "INFO_LIST")
 public class InfoList {
     @ColumnInfo
     private int who = 0;//用户ID
-    @ColumnInfo
+    @PrimaryKey
     private int UID = 0;//UID
     @ColumnInfo
     private int count = 0;//未读消息数
