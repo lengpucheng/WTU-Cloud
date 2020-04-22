@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/infoFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/Info" />
+    <item
+        android:id="@+id/peopleFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/people" />
+    <item
+        android:id="@+id/courseFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="@string/menu_course" />
+</menu>
