@@ -1,11 +1,17 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- 系统主题 -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#03A9F4</item>
+        <item name="colorPrimaryDark">#3F51B5</item>
+        <item name="colorAccent">#00BCD4</item>
+        <!--        不显示工具条-->
+        <item name="windowActionBar">false</item>
+        <!--        不显示标题-->
+        <item name="windowNoTitle">true</item>
     </style>
+
+
 
 </resources>

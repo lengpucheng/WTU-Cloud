@@ -3,4 +3,21 @@
     <string name="Info">消息</string>
     <string name="people">联系人</string>
     <string name="menu_course">课表</string>
+    <string name="main_avatar">你的头像</string>
+    <string name="addButton">添加按钮</string>
+    <string name="avatar">头像</string>
+    <string name="dome_name">玲儿林</string>
+    <string name="dome_phone">+86-15527094032</string>
+    <string name="dome_ment">代码部</string>
+    <string name="login_forgetPass" >忘记密码</string>
+    <string name="login_registered">用户注册</string>
+    <string name="login_about">关于软件</string>
+    <string name="login_version">v0.0.1</string>
+    <string name="login_copyright_notice">Power by lengpucheng @2020 lPC@hll520.cn</string>
+    <string name="login_uname">请输入UID或用户名</string>
+    <string name="login_pass">请输入密码</string>
+    <string name="login_go">登录</string>
+    <string name="login_passbox">密码输入框</string>
+    <string name="login_unamebox">用户名输入框</string>
+    <string name="logo">Logo</string>
 </resources>

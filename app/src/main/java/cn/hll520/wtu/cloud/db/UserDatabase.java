@@ -20,7 +20,7 @@ public abstract class UserDatabase extends RoomDatabase {
     private static UserDatabase DB_PEO;
 
     //永远只执行一次
-    static synchronized UserDatabase getDatabase(Context context) {
+    public static synchronized UserDatabase getDatabase(Context context) {
         if (DB_PEO == null) {
             //数据库名
             DB_PEO = Room.databaseBuilder(context.getApplicationContext(), UserDatabase.class, "peo_data")
