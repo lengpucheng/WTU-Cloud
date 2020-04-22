@@ -1,0 +1,15 @@
+
+-- 查询根据另一个
+-- select * from stu where stu.password in(select sho.sid from sho WHERE cid='1001')
+
+-- 去重结果
+-- SELECT DISTINCT cid from sho WHERE sho.sid in(SELECT `password` FROM stu)
+
+
+-- 左外连接查询  优先显示左边
+SELECT password,name,age,sho.cid FROM stu left JOIN sho on stu.`password`=sho.sid
+
+-- 内连接查询  只显示都有的
+-- SELECT password,name,age,sho.cid FROM stu inner JOIN sho on stu.`password`=sho.sid
+
+
