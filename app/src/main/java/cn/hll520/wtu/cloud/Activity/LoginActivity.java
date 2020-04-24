@@ -5,10 +5,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import cn.hll520.wtu.cloud.Activity.Main.MainActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;
@@ -26,8 +28,14 @@ public class LoginActivity extends AppCompatActivity {
         mViewModel.getCloudUser().observe(this, new Observer<CloudUser>() {
             @Override
             public void onChanged(CloudUser cloudUser) {
-                if(cloudUser.isLogin())
-                    Toast.makeText(LoginActivity.this, "登录成果", Toast.LENGTH_SHORT).show();
+                if(cloudUser.isLogin()) {
+                    Toast.makeText(LoginActivity.this, "登录成功\n上次登录时间："+cloudUser.getTIME(), Toast.LENGTH_SHORT).show();
+//                    mViewModel.addUser(cloudUser.getUser());
+                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else
+                    Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
             }
         });
 

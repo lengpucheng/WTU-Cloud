@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql1
+ Source Server         : 阿里云RDS
  Source Server Type    : MySQL
- Source Server Version : 80017
- Source Host           : 127.0.0.1:3306
- Source Schema         : app_test_web
+ Source Server Version : 80016
+ Source Host           : sql.hll520.cn:3306
+ Source Schema         : wtucloud_test
 
  Target Server Type    : MySQL
- Target Server Version : 80017
+ Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 22/04/2020 19:02:28
+ Date: 24/04/2020 19:41:53
 */
 
 SET NAMES utf8mb4;
@@ -32,9 +32,9 @@ CREATE TABLE `user`  (
   `REGTIME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '注册时间',
   `LOGINTIME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次登录',
   `LOGIN` int(2) NOT NULL DEFAULT 0 COMMENT '状态1在线，0未登录',
-  `READ` int(2) NOT NULL DEFAULT 0,
+  `READSUM` int(2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`UID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Triggers structure for table user

@@ -11,15 +11,18 @@ import androidx.lifecycle.MutableLiveData;
 
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.model.User;
+import cn.hll520.wtu.cloud.repository.UserRepository;
 
 public class LoginViewModel extends AndroidViewModel {
     private User user=new User();
     private CloudUser cloudUser;
     private MutableLiveData<CloudUser> _CLOUD=new MutableLiveData<>();
+    private UserRepository repository;
     LiveData<CloudUser> getCloudUser(){return _CLOUD;}
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
+        repository=new UserRepository(application);
     }
 
     //设置用户
@@ -29,20 +32,27 @@ public class LoginViewModel extends AndroidViewModel {
         else
             user.setUname(username);
         user.setPassword(password);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                CloudUser cloudUser2=new CloudUser(user);
-                _CLOUD.postValue(cloudUser2);
-            }
-        }).start();
-
+        new login().execute(user);
     }
 
-    void dologin(){
-        cloudUser=new CloudUser(user);
-        _CLOUD.postValue(cloudUser);
+
+    //对外接口
+    void addUser(User... users){repository.insert(users);}
+
+
+
+
+
+    /*————————————————————————————————-封装的方法————————————————————————————————-
+    * */
+    class login extends AsyncTask<User,Void,Void>{
+
+        @Override
+        protected Void doInBackground(User... users) {
+            cloudUser=new CloudUser(user);
+            _CLOUD.postValue(cloudUser);
+            return null;
+        }
     }
 
 }

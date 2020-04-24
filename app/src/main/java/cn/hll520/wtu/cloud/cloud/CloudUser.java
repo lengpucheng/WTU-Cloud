@@ -11,6 +11,8 @@ public class CloudUser {
     private boolean login=false;
     //用户信息
     private User user;
+    //上次登录时间
+    private String TIME="";
     //登录链接
     private DataLinkUser link=new DataLinkUser();
 
@@ -38,6 +40,8 @@ public class CloudUser {
         login_do();
     }
 
+    public String getTIME(){return TIME;}
+
     /*
     * ————————————————————封装的登录工具——————————————————
     * */
@@ -46,6 +50,8 @@ public class CloudUser {
             login=link.login(user.getUname(),user.getPassword());
         else
             login=link.login(user.getUID(),user.getPassword());
+        user=link.getUser();
+        TIME=link.getTime();
     }
 
 }

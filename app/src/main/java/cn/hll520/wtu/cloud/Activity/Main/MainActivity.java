@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity;
+package cn.hll520.wtu.cloud.Activity.Main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
