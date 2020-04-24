@@ -6,9 +6,11 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "PEOPLE_INFO")
 public class People {
-    @ColumnInfo
-    private int who=0;   //属于谁
     @PrimaryKey
+    private int _ID=0;//主键=who+UID
+    @ColumnInfo
+    private int who=0;   //属于谁个人或组织
+    @ColumnInfo
     private int UID=0;   //UID
     @ColumnInfo
     private int SID=0;  //学号
@@ -49,12 +51,22 @@ public class People {
 
     public People(){}
 
+    public int get_ID() {
+        return _ID;
+    }
+
+    public void set_ID(int _ID) {
+        this._ID = _ID;
+    }
+
     public int getWho() {
         return who;
     }
 
     public void setWho(int who) {
         this.who = who;
+        //拼合
+        _ID= Integer.parseInt(String.valueOf(who)+String.valueOf(UID));
     }
 
     public int getUID() {
@@ -63,6 +75,7 @@ public class People {
 
     public void setUID(int UID) {
         this.UID = UID;
+        _ID= Integer.parseInt(String.valueOf(who)+String.valueOf(UID));
     }
 
     public int getSID() {

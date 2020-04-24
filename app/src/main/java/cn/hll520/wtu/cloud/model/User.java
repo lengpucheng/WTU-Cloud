@@ -22,8 +22,6 @@ public class User {
     private String passinfo=""; //密保
     @ColumnInfo(name = "passkey")
     private String passkey="";      //密保答案
-    @ColumnInfo(name = "regTime")
-    private String regTime="2020-04-20"; //注册时间
     @ColumnInfo(name = "read")
     private int read=0;         //消息记录
     @ColumnInfo(name = "userOrg")
@@ -97,15 +95,6 @@ public class User {
         this.passkey = passkey;
     }
 
-    public String getRegTime() {
-        return regTime;
-    }
-
-    public void setRegTime(String regTime) {
-        this.regTime = regTime;
-    }
-
-
     public int getRead() {
         return read;
     }
@@ -149,7 +138,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", passinfo='" + passinfo + '\'' +
                 ", passkey='" + passkey + '\'' +
-                ", regTime='" + regTime + '\'' +
                 ", read=" + read +
                 ", userOrg=" + userOrg +
                 ", userMent=" + userMent +

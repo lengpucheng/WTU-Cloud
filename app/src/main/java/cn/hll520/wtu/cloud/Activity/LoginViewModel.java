@@ -15,7 +15,6 @@ import cn.hll520.wtu.cloud.repository.UserRepository;
 
 public class LoginViewModel extends AndroidViewModel {
     private User user=new User();
-    private CloudUser cloudUser;
     private MutableLiveData<CloudUser> _CLOUD=new MutableLiveData<>();
     private UserRepository repository;
     LiveData<CloudUser> getCloudUser(){return _CLOUD;}
@@ -32,7 +31,7 @@ public class LoginViewModel extends AndroidViewModel {
         else
             user.setUname(username);
         user.setPassword(password);
-        new login().execute(user);
+        new login().execute();
     }
 
 
@@ -45,11 +44,11 @@ public class LoginViewModel extends AndroidViewModel {
 
     /*————————————————————————————————-封装的方法————————————————————————————————-
     * */
-    class login extends AsyncTask<User,Void,Void>{
-
+    @SuppressLint("StaticFieldLeak")
+    class login extends AsyncTask<Void,Void,Void>{
         @Override
-        protected Void doInBackground(User... users) {
-            cloudUser=new CloudUser(user);
+        protected Void doInBackground(Void... voids) {
+            CloudUser cloudUser = new CloudUser(user);
             _CLOUD.postValue(cloudUser);
             return null;
         }
