@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cn.hll520.wtu.cloud.Activity.MainActivi.PeopleViewModel;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.model.People;
 

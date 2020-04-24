@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/infoFragment"
-        android:name="cn.hll520.wtu.cloud.Activity.MainActivi.InfoFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.InfoFragment"
         android:label="info_fragment"
         tools:layout="@layout/info_fragment" />
     <fragment
         android:id="@+id/peopleFragment"
-        android:name="cn.hll520.wtu.cloud.Activity.MainActivi.PeopleFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.PeopleFragment"
         android:label="people_fragment"
         tools:layout="@layout/people_fragment" />
     <fragment
         android:id="@+id/courseFragment"
-        android:name="cn.hll520.wtu.cloud.Activity.MainActivi.CourseFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.CourseFragment"
         android:label="course_fragment"
         tools:layout="@layout/course_fragment" />
 </navigation>

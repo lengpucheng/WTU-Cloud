@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.MainActivi;
+package cn.hll520.wtu.cloud.Activity.Main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;

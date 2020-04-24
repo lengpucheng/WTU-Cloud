@@ -10,9 +10,10 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        dataBinding {
+            enabled true
+        }
     }
 
     buildTypes {
@@ -29,12 +30,14 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/README'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/license.txt'
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/rxjava.properties'
+
     }
 
 }
@@ -51,15 +54,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation files('libs\\alibaba-1.2.66.jar')
     implementation files('libs\\jsoup-1.10.2.jar')
-    implementation files('libs\\mysql-connector-java-5.1.48.jar')
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation files('libs\\mysql-connector-java-8.0.18.jar')
+
+    //httpclient5
     dependencies {
         api 'com.github.ok2c.hc5.android:httpclient-android:0.1.0'
     }
+    //room
     dependencies {
         def room_version = "2.2.3"
-
         implementation "androidx.room:room-runtime:$room_version"
         annotationProcessor "androidx.room:room-compiler:$room_version"
         // For Kotlin use kapt instead of annotationProcessor
