@@ -1,6 +1,8 @@
 package cn.hll520.wtu.cloud.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,7 +14,7 @@ import cn.hll520.wtu.cloud.model.User;
 
 public class LoginViewModel extends AndroidViewModel {
     private User user=new User();
-    private CloudUser cloudUser=new CloudUser();
+    private CloudUser cloudUser;
     private MutableLiveData<CloudUser> _CLOUD=new MutableLiveData<>();
     LiveData<CloudUser> getCloudUser(){return _CLOUD;}
 
@@ -27,7 +29,20 @@ public class LoginViewModel extends AndroidViewModel {
         else
             user.setUname(username);
         user.setPassword(password);
-        cloudUser.setUser(user);
-        _CLOUD.setValue(cloudUser);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CloudUser cloudUser2=new CloudUser(user);
+                _CLOUD.postValue(cloudUser2);
+            }
+        }).start();
+
     }
+
+    void dologin(){
+        cloudUser=new CloudUser(user);
+        _CLOUD.postValue(cloudUser);
+    }
+
 }

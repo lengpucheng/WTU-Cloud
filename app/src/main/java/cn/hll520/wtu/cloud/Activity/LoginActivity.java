@@ -1,7 +1,6 @@
 package cn.hll520.wtu.cloud.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,11 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import cn.hll520.wtu.cloud.Activity.Main.CourseViewModel;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;
-import cn.hll520.wtu.cloud.link.GetData;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;

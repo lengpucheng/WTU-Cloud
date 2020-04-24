@@ -22,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     packagingOptions {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -56,7 +57,7 @@ dependencies {
     implementation files('libs\\jsoup-1.10.2.jar')
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
-    implementation files('libs\\mysql-connector-java-8.0.18.jar')
+    implementation files('libs\\mysql-connector-java-5.1.48.jar')
 
     //httpclient5
     dependencies {

@@ -14,9 +14,11 @@ class DataLink {
         CONNECT =createConnection();
     }
 
-    //永远只有一个链接
-    static synchronized DataLink getLink(){
-        if(LINK==null) LINK = new DataLink();
+
+    //获取链接
+    static  DataLink getLink(){
+        if(LINK==null)
+            LINK = new DataLink();
         return LINK;
     }
 
@@ -27,7 +29,9 @@ class DataLink {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://sql.hll520.cn:3306/wtucloud_test?useSSL=false";
-            return DriverManager.getConnection(url, DataLink.LINK_NAME, DataLink.LINK_PASS);
+            Connection connection=DriverManager.getConnection(url, DataLink.LINK_NAME, DataLink.LINK_PASS);
+            Log.i("err","链接服务器成功\n");
+            return connection;
         } catch (Exception e) {
             Log.i("err","链接服务器失败\n"+e);
             return null;
