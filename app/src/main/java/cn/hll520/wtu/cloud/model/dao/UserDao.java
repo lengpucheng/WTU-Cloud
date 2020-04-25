@@ -25,4 +25,11 @@ public interface UserDao {
     @Query("SELECT * FROM USER_LOGIN")
     LiveData<List<User>> getUserAll();
 
+    @Query("SELECT * FROM USER_LOGIN WHERE login=:login")
+    User getUser_login(int login);
+
+    @Query("SELECT * FROM USER_LOGIN WHERE UID=:UID")
+    User getUser_UID(int UID);
+
+
 }

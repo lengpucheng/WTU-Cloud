@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import cn.hll520.wtu.cloud.cloud.CloudPeo;
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.model.User;
 import cn.hll520.wtu.cloud.repository.UserRepository;
@@ -38,7 +39,8 @@ public class LoginViewModel extends AndroidViewModel {
     //对外接口
     void addUser(User... users){repository.insert(users);}
 
-
+    //获取UID用户
+    User getUser(int UID){return  repository.getUser_UID(UID);}
 
 
 
@@ -50,6 +52,7 @@ public class LoginViewModel extends AndroidViewModel {
         protected Void doInBackground(Void... voids) {
             CloudUser cloudUser = new CloudUser(user);
             _CLOUD.postValue(cloudUser);
+           addUser(cloudUser.getUser());
             return null;
         }
     }

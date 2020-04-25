@@ -225,4 +225,31 @@ public class People {
     public void setLogin(int isLogin){
         this.login=(isLogin==1);
     }
+
+    @Override
+    public String toString() {
+        return "People{" +
+                "_ID=" + _ID +
+                ", who=" + who +
+                ", UID=" + UID +
+                ", SID=" + SID +
+                ", uname='" + uname + '\'' +
+                ", img='" + img + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", phone='" + phone + '\'' +
+                ", QQ='" + QQ + '\'' +
+                ", Email='" + Email + '\'' +
+                ", campus='" + campus + '\'' +
+                ", college='" + college + '\'' +
+                ", clas='" + clas + '\'' +
+                ", house='" + house + '\'' +
+                ", mainOrg='" + mainOrg + '\'' +
+                ", mainMent='" + mainMent + '\'' +
+                ", mainPositior='" + mainPositior + '\'' +
+                ", regTime='" + regTime + '\'' +
+                ", login=" + login +
+                '}';
+    }
 }

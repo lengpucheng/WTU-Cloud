@@ -25,4 +25,7 @@ public interface PeopleDao {
 
     @Query("SELECT * FROM PEOPLE_INFO")
     LiveData<List<People>> getPeoAll();
+
+    @Query("SELECT * FROM PEOPLE_INFO WHERE _ID=:peo_id")
+    People getPeoForID(int peo_id);
 }

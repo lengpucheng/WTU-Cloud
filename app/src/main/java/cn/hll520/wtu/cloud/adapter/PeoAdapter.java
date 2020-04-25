@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import cn.hll520.wtu.cloud.Activity.PeoInfoActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.model.People;
 
@@ -35,7 +36,7 @@ public class PeoAdapter extends ListAdapter<People, PeoAdapter.PeoViewHodel> {
     //构造组件
     @NonNull
     @Override
-    public PeoViewHodel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PeoViewHodel onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         //定义一个构造
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemView;
@@ -46,9 +47,8 @@ public class PeoAdapter extends ListAdapter<People, PeoAdapter.PeoViewHodel> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("https://www.baidu.com/s?wd=" + holder.name.getText().toString());
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(uri);
+                Intent intent = new Intent(parent.getContext(), PeoInfoActivity.class);
+                intent.putExtra("_ID",holder._ID);
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -62,12 +62,14 @@ public class PeoAdapter extends ListAdapter<People, PeoAdapter.PeoViewHodel> {
         holder.name.setText(people.getName());
         holder.ment.setText(people.getMainMent());
         holder.bottom.setText(people.getPhone());
+        holder._ID=people.get_ID();
     }
 
     class PeoViewHodel extends RecyclerView.ViewHolder {
         ImageView avatar;
         TextView name,ment,bottom;
-        public PeoViewHodel(@NonNull View itemView) {
+        int _ID=0;
+        PeoViewHodel(@NonNull View itemView) {
             super(itemView);
             avatar=itemView.findViewById(R.id.card_people_avatar);
             name=itemView.findViewById(R.id.card_people_name);

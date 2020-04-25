@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -51,7 +52,8 @@ public class PeopleFragment extends Fragment {
         adapter=new PeoAdapter();
         //添加适配器
         recyclerView.setAdapter(adapter);
-
+        if(peos==null)
+            mViewModel.getPEO();
         peos=mViewModel.getAllPeos();
         //添加监听   参数生命周期，监听者
         peos.observe(getViewLifecycleOwner(), new Observer<List<People>>() {

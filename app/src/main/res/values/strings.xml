@@ -9,7 +9,7 @@
     <string name="dome_name">玲儿林</string>
     <string name="dome_phone">+86-15527094032</string>
     <string name="dome_ment">代码部</string>
-    <string name="login_forgetPass" >忘记密码</string>
+    <string name="login_forgetPass">忘记密码</string>
     <string name="login_registered">用户注册</string>
     <string name="login_about">关于软件</string>
     <string name="login_version">v0.0.1</string>
@@ -20,4 +20,23 @@
     <string name="login_passbox">密码输入框</string>
     <string name="login_unamebox">用户名输入框</string>
     <string name="logo">Logo</string>
+    <string name="dome_org">武汉纺织大学广播电视台</string>
+    <string name="peo_call">呼叫</string>
+    <string name="peo_msg">短信</string>
+    <string name="peo_email">邮件</string>
+    <string name="peo_send">发消息</string>
+    <string name="peo_phone">电话</string>
+    <string name="peo_QQ">Q   Q</string>
+    <string name="peo_gender">性别</string>
+    <string name="peo_sid">学号</string>
+    <string name="peo_birthday">生日</string>
+    <string name="peo_age">年龄</string>
+    <string name="peo_campus">校区</string>
+    <string name="peo_college">学院</string>
+    <string name="peo_class">班级</string>
+    <string name="peo_house">宿舍</string>
+    <string name="dome_position">部长</string>
+    <string name="app_btout">返回</string>
+    <string name="app_share">分享</string>
+    <string name="peo_regtime">注册时间</string>
 </resources>

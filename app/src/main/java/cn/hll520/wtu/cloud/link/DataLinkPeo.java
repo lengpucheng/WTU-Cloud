@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.hll520.wtu.cloud.model.People;
-import cn.hll520.wtu.cloud.model.User;
+
 
 public class DataLinkPeo {
     private static final String TAG = "EFF_LINK_PEO";
@@ -24,6 +24,7 @@ public class DataLinkPeo {
     }
 
     public List<People> getPeoples(int UID){
+        this.UID=UID;
         getAllPeo();
         return peoples;
     }
@@ -35,6 +36,7 @@ public class DataLinkPeo {
             Log.e(TAG, "获取链接失败");
             return;
         }
+
         String SQL="SELECT organ_peo.OID,user_info.UID,user_info.SID,user_info.IMG,user_info.NAME,user_info.gender," +
                 "user_info.BIRTHDAY,user_info.PHONE,user_info.QQ,user_info.EMAIL,user_info.CAMPUS," +
                 "user_info.COLLEG,user_info.CLAS,user_info.MAINORG,user_info.MAINMENT,user_info.MAINPOSITION," +
@@ -66,7 +68,9 @@ public class DataLinkPeo {
                 people.setLogin(res.getInt(18));
                 peoples.add(people);
             }
+
         } catch (SQLException e) {
+            Log.e(TAG, "getAllPeo: ",e );
             e.printStackTrace();
         }
 

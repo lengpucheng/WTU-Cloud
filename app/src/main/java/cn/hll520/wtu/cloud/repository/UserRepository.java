@@ -25,12 +25,22 @@ public class UserRepository {
     /*——————————————————————————封装的对外的使用接口——————————————————————————————
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
+    //获取全部
     public LiveData<List<User>> getAllUser(){return userDao.getUserAll();}
 
+    //获取根据登录状态
+    public User getUser_login(){ return userDao.getUser_login(1); }
+
+    //获取用户更具UID
+    public User getUser_UID(int UID){return userDao.getUser_UID(UID);}
+
+    //插入如果有重复就跟新
     public void insert(User... users){new InsertAsyncTask(userDao).execute(users);}
 
+    //更新
     public void upUser(User... users){new UpdateAsyncTask(userDao).execute(users);}
 
+    //删除
     public void delUser(User... users){new DeleteAsyncTask(userDao).execute(users);}
 
 
@@ -50,7 +60,12 @@ public class UserRepository {
         //执行线程
         @Override
         protected Void doInBackground(User... users) {
-            userDao.insertUser(users);
+         for(User user:users){
+             if(userDao.getUser_UID(user.getUID())==null)
+                 userDao.insertUser(user);
+             else
+                 userDao.updataUser(user);
+         }
             return null;
         }
     }

@@ -28,44 +28,57 @@ public class PeopleRepository {
 
 
     //查询全部——————插入LiveData 自带了AsyncTask，不需要在定义线程实现
-    public LiveData<List<People>> getAllPeos() { return allPeos; }
-    //插入
-    public void insertPeo(People... people) {
-        new InsertAsyncTask(peopleDao).execute(people);
+    public LiveData<List<People>> getAllPeos() {
+        return allPeos;
     }
+
+
+
     //删除
     public void delPeo(People... people) {
         new DeleteAsyncTask(peopleDao).execute(people);
     }
+
     //更新
     public void updatePeo(People... people) {
         new UpdateAsyncTask(peopleDao).execute(people);
     }
 
+    //查询更具 _id
+    public People getPeoForID(int _ID) {
+        return peopleDao.getPeoForID(_ID);
+    }
 
-
+    //插入，存在则跟新
+    public void addPeo(People... people) {
+        new AddAsyncTask(peopleDao).execute(people);
+    }
 
 
     /*——————————————————————————封装的AsynTask线程————————————————————————
-    *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
-    */
-
-    //插入数据
-    public static class InsertAsyncTask extends AsyncTask<People, Void, Void> {
+     *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
+     */
+    //添加去重
+    public static class AddAsyncTask extends AsyncTask<People, Void, Void> {
         private PeopleDao peoDao;
+
         //构造线程
-        InsertAsyncTask(PeopleDao peoDao) {
+        AddAsyncTask(PeopleDao peoDao) {
             this.peoDao = peoDao;
         }
 
-        //执行线程
         @Override
-        protected Void doInBackground(People... peoples) {
-            peoDao.insertPeo(peoples);
+        protected Void doInBackground(People... people) {
+            for (People peo : people) {
+                if (peoDao.getPeoForID(peo.get_ID()) == null)
+                    peoDao.insertPeo(peo);
+                else
+                    peoDao.updatePeo(peo);
+            }
+
             return null;
         }
     }
-
 
     //更新数据
     static class UpdateAsyncTask extends AsyncTask<People, Void, Void> {
