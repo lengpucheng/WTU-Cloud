@@ -13,22 +13,19 @@ import cn.hll520.wtu.cloud.model.User;
 
 public class DataLinkUser {
     private  final String TAG = "EFF_LINK_USER";
-    private  DataLink LINK = DataLink.getLink();
+    private  static DataLink LINK = DataLink.getLink();//获取链接
     private  String USERNAME = "";//用户名
     private  String PASSWORD = "";//密码
-    private  String LOGINTIME = "";//登录时间
+    private  String TIME = "";//登录时间
     private  User user=null;//用户信息
     private  int UID = 0;//UID
-    private  int OID=0;//组织号
-    private  int MID=0;//部门号
-    private  String USER_INFO ="";
-    private  String INVITE="";
+    private  String MSG ="";
+
+
+
     //————————————————————登录/注册接口——————————————————————————
-
-    public DataLinkUser() { USER_INFO=""; }
-
-    //获取链接消息
-    public String getInfo(){return USER_INFO;}
+    //获取状态消息
+    public String getMsg(){return MSG;}
 
     //用户名和密码
     public boolean login(String username, String password) {
@@ -51,51 +48,47 @@ public class DataLinkUser {
 
     //获取上传登录时间
     public String getTime() {
-        return LOGINTIME;
+        return TIME;
     }
-
+    //退出登录
     public void outLogin(){
         login_out();
     }
 
-    //根据用户名查询信息
-    public User getUser(String userName){return user;}
+    //根据用户名或UID查询信息
+    public User getUser(String userName){return find_user(userName,0);}
+    public User getUser(int UID){return find_user("",UID);}
 
     //判断用户名是否存在，重复/存在返回true
-    public boolean isUserName(String userName){this.USERNAME=userName;find_user();return user!=null;}
+    public boolean isUserName(String userName){return find_user(userName,0)!=null;}
 
     //查询邀请码信息，存在返回ture
-    public boolean isInvite(String Invite){this.INVITE=Invite;find_invite();return MID!=0;}
+    public boolean isInvite(String Invite){return find_invite(Invite)!=null;}
 
     //注册
-    public boolean Reg(User user,String name,String email,String gender,String invite){
-        this.user=user;
-        if(isUserName(user.getUname()))
-           return false;
-        if(!do_regUser(gender,email,name))
-            return false;
-        if(isInvite(invite))
-            add_peo(100);
-        return true;
+    public boolean reg(User user,String name,String email,String gender,String invite){
+       if(invite.equals("0"))
+           return do_regUser_noCode(user,gender,email,name);
+       return do_regUser_Code(user,gender,email,name,invite);
     }
 
     //添加联系人到部门
-    public boolean addMent(int UID,int OID,int MID,int safety){
-        this.UID=UID;
-        this.OID=OID;
-        this.MID=MID;
-        return add_peo(safety);
-    }
+    public boolean addMent(int UID,int OID,int MID,int safety){ return add_peo(OID,MID,UID,safety); }
     public boolean addMent(int UID,int OID,int MID){
         return addMent(UID,OID,MID,101);
     }
+
+
+
     /*
-    * ————————————封装的登录实现——————————————————————
+    * ————————————————————————————————————-封装的登录实现————————————————————————————————————————
     * */
+
     //执行登录
     private boolean login_do() {
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
+            MSG="网络异常";
             return false;
         }
         String SQL = "SELECT user.UID,user.UNAME,user.SID,user.SAFETY,user.PASSINFO," +
@@ -116,10 +109,12 @@ public class DataLinkUser {
                 user.setSID(res.getString(3));
                 user.setUserSafety(res.getInt(4));
                 user.setPassinfo(res.getString(5));
-                LOGINTIME = res.getString(6);
+                TIME = res.getString(6);
                 user.setRead(res.getInt(7));
                 user.setUserOrg(res.getInt(8));
                 user.setUserMent(res.getInt(9));
+                UID=user.getUID();
+                USERNAME=user.getUname();
                 login_read();
                 res.close();
                 pres.close();
@@ -128,7 +123,8 @@ public class DataLinkUser {
             pres.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            Log.e(TAG, "login_uname: ", e);
+            Log.e(TAG, "login_do: ",e );
+            MSG="网络异常";
         }
         return false;
     }
@@ -147,6 +143,8 @@ public class DataLinkUser {
             pres.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.e(TAG, "login_read: ",e );
+            MSG="网络错误";
         }
     }
 
@@ -160,6 +158,8 @@ public class DataLinkUser {
             pres.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.e(TAG, "login_out: ",e );
+            MSG="网络错误";
         }
     }
 
@@ -167,98 +167,82 @@ public class DataLinkUser {
     /*
     * ——————————————————————————封装的注册和修改信息实现——————————————————————————
     * */
+
     //查询用户
-    private void find_user(){
+    private User find_user(String username,int UID){
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
-            return;
+            MSG="网络异常";
+            return null;
         }
+        User user=null;
         String sql = "SELECT uid,uname,SID,PASSINFO,LOGIN FROM user WHERE uname=? or uid=?";
         try {
             PreparedStatement pres=LINK.getConnection().prepareCall(sql);
-            pres.setString(1,USERNAME);
+            pres.setString(1,username);
             pres.setInt(2,UID);
             ResultSet res = pres.executeQuery();
             while (res.next()){
                 user=new User();
                 user.setUID(res.getInt(1));
                 user.setUname(res.getString(2));
-                user.setPassinfo(res.getString(3));
-                user.setLogin(res.getInt(4) == 1);
-                UID=user.getUID();
-                USERNAME=user.getUname();
+                user.setSID(res.getString(3));
+                user.setPassinfo(res.getString(4));
+                user.setLogin(res.getInt(5) == 1);
+                res.close();
+                pres.close();
+                return user;
             }
             res.close();
             pres.close();
+            MSG="用户不存在";
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.e(TAG, "find_user: ",e );
+            MSG="网络异常";
         }
+        return user;
     }
 
-    //查询邀请码
-    private void find_invite(){
+    //查询邀请码是否存在
+    private String[] find_invite(String invite){
+        String[]  strings = new String[4];//OID,MID,ONAME,MNAME
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
-            return;
+            MSG="网络错误";
+            return null;
         }
         String sql = "SELECT organ_ment.OID,organ_ment.MID,organ.NAME,organ_ment.MENTNAME FROM organ_ment " +
                 "LEFT JOIN organ on organ_ment.OID=organ.OID WHERE organ_ment.INVITCODE=?";
         try {
             PreparedStatement pres=LINK.getConnection().prepareCall(sql);
-            pres.setString(1,INVITE);
+            pres.setString(1,invite);
             ResultSet res = pres.executeQuery();
             while (res.next()){
-                OID=res.getInt(1);
-                MID=res.getInt(2);
-                USER_INFO+="已自动加入："+res.getString(3)+":";
-                USER_INFO+=res.getString(4)+"部";
+                strings[0]= String.valueOf(res.getInt(1));
+                strings[1]= String.valueOf(res.getInt(2));
+                strings[2]= res.getString(3);
+                strings[3]= res.getString(4);
+                res.close();
+                pres.close();
+                return strings;
             }
             res.close();
             pres.close();
+            MSG="邀请码不存在";
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.e(TAG, "find_invite: ",e );
+            MSG="网络错误";
         }
-    }
-
-    //注册用户
-    private boolean do_regUser(String Gender,String Email,String NAME){
-        if (LINK.getConnection() == null) {
-            Log.e(TAG, "获取链接失败");
-            return false;
-        }
-        String sql = "INSERT user(UNAME,PASSWORD,PASSINFO,PASSKEY) VALUES(?,?,?,?)";
-        try {
-            PreparedStatement pres=LINK.getConnection().prepareCall(sql);
-            pres.setString(1,user.getUname());
-            pres.setString(2,user.getPassword());
-            pres.setString(3,user.getPassinfo());
-            pres.setString(4,user.getPasskey());
-            pres.execute();
-            pres.close();
-            //获取新的用户信息
-            find_user();
-            //更新用户详情信息
-            sql="UPDATE  user_info SET gender=?,EMAIL=?,NAME=?  WHERE UID=?";
-            pres=LINK.getConnection().prepareCall(sql);
-            pres.setString(1,Gender);
-            pres.setString(2,Email);
-            pres.setString(3,NAME);
-            pres.setInt(4,UID);
-            pres.execute();
-            pres.close();
-            return true;
-        } catch (SQLException e) {
-            USER_INFO="网络错误!";
-            e.printStackTrace();
-            return false;
-        }
-
+        return null;
     }
 
     //添加用户到部门
-    private boolean add_peo(int safety){
+    private boolean add_peo(int OID,int MID,int UID,int safety){
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
+            MSG="网络错误！";
             return false;
         }
         String sql="INSERT organ_peo(OID,MID,UID,SAFETY) VALUES(?,?,?,?)";
@@ -273,9 +257,115 @@ public class DataLinkUser {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.e(TAG, "add_peo: ",e);
+            MSG="网络错误！";
             return false;
         }
-
     }
+
+
+    //用户注册一：无邀请码
+    private boolean do_regUser_noCode(User user,String Gender,String Email,String NAME){
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return false;
+        }
+        //新建用户
+        String sql = "INSERT user(UNAME,PASSWORD,PASSINFO,PASSKEY) VALUES(?,?,?,?)";
+        try {
+            //写入信息
+            PreparedStatement pres=LINK.getConnection().prepareCall(sql);
+            pres.setString(1,user.getUname());
+            pres.setString(2,user.getPassword());
+            pres.setString(3,user.getPassinfo());
+            pres.setString(4,user.getPasskey());
+            pres.execute();
+            pres.close();
+            Log.d(TAG, "do_regUser_Code: 注册写入成功");
+        } catch (SQLException e) {
+            MSG ="用户注册失败!";
+            e.printStackTrace();
+            return false;
+        }
+        //更新用户详情信息
+        try {
+            sql="UPDATE  user_info SET gender=?,EMAIL=?,NAME=?  WHERE UID=?";
+            //获取新的用户信息
+            user=find_user(user.getUname(),0);
+            //更新信息
+            PreparedStatement pres = LINK.getConnection().prepareCall(sql);
+            pres.setString(1,Gender);
+            pres.setString(2,Email);
+            pres.setString(3,NAME);
+            pres.setInt(4,user.getUID());
+            pres.execute();
+            pres.close();
+            Log.d(TAG, "do_regUser_Code: 信息更新成功");
+        } catch (SQLException e) {
+            MSG ="用户信息写入失败!";
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    //用户注册二：有邀请码
+    private boolean do_regUser_Code(User user,String Gender,String Email,String NAME,String invite){
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return false;
+        }
+        //新建用户
+        String sql = "INSERT user(UNAME,PASSWORD,PASSINFO,PASSKEY) VALUES(?,?,?,?)";
+        try {
+            //写入信息
+            PreparedStatement pres=LINK.getConnection().prepareCall(sql);
+            pres.setString(1,user.getUname());
+            pres.setString(2,user.getPassword());
+            pres.setString(3,user.getPassinfo());
+            pres.setString(4,user.getPasskey());
+            pres.execute();
+            pres.close();
+            Log.d(TAG, "do_regUser_Code: 注册写入成功");
+        } catch (SQLException e) {
+            MSG ="用户注册失败!";
+            e.printStackTrace();
+            return false;
+        }
+        //更新用户详情信息
+        try {
+            sql="UPDATE  user_info SET gender=?,EMAIL=?,NAME=?  WHERE UID=?";
+            //获取新的用户信息
+            user=find_user(user.getUname(),0);
+            //更新信息
+            PreparedStatement pres = LINK.getConnection().prepareCall(sql);
+            pres.setString(1,Gender);
+            pres.setString(2,Email);
+            pres.setString(3,NAME);
+            pres.setInt(4,user.getUID());
+            pres.execute();
+            pres.close();
+            Log.d(TAG, "do_regUser_Code: 信息更新成功");
+        } catch (SQLException e) {
+            MSG ="用户信息写入失败!";
+            e.printStackTrace();
+            return false;
+        }
+        //写入部门信息
+        try {
+            String[] strings=find_invite(invite);
+            add_peo(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),user.getUID(),100);
+            MSG="成功使用邀请码！以自动加入"+strings[2]+strings[3];
+        } catch (Exception e) {
+            e.printStackTrace();
+            MSG="使用邀请码失败！请重试";
+            return false;
+        }
+        return true;
+    }
+
+
 
 }

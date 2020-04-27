@@ -42,7 +42,7 @@ public class RegisteredActivity extends AppCompatActivity {
         }
     };
     User user=new User();
-    String invite="0";
+    String invite;
     String Email;
     String name;
     String gender="男";
@@ -68,13 +68,12 @@ public class RegisteredActivity extends AppCompatActivity {
 
     private void reg() {
         String str;//工具人
+        invite="0";//初始化邀请码
         user=new User();
         //用户名
         str=binding.regUname.getText().toString();
-        if(str.isEmpty()){
-            binding.regUname.setError("用户名不能为空");
+        if(!isUserName(str))
             return;
-        }
         user.setUname(str);
         //密码
         str=binding.regPassword.getText().toString();
@@ -131,6 +130,8 @@ public class RegisteredActivity extends AppCompatActivity {
         }).start();
     }
 
+
+
     //执行
     private void reg_do(User user, String invite, String email, String name, String gender) {
         CloudReg cloudReg=new CloudReg(user,invite,name,email,gender);
@@ -153,6 +154,21 @@ public class RegisteredActivity extends AppCompatActivity {
     }
 
 
+    //用户名检验
+    private boolean isUserName(String userName) {
+        //不为空
+        if(userName.isEmpty()){
+            binding.regUname.setError("用户名不能为空");
+            return false;
+        }
+        if(!userName.matches("[0-9]+")){
+            binding.regUname.setError("用户名不能为纯数字");
+            return false;
+        }
+
+        return true;
+    }
+
     //密码检验
     private boolean isPassword(String password) {
         if(password.isEmpty()){
@@ -165,4 +181,5 @@ public class RegisteredActivity extends AppCompatActivity {
         }
         return true;
     }
+
 }

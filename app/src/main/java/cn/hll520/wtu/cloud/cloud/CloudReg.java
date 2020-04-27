@@ -5,15 +5,15 @@ import cn.hll520.wtu.cloud.model.User;
 
 public class CloudReg {
     //状态用户名
-    private boolean username_status=true;
+    private boolean username_status;
     //邀请码状态
-    private boolean invite_status=true;
+    private boolean invite_status;
     //注册状态
-    private boolean reg_status=false;
+    private boolean reg_status;
     //用户信息
     private User user;
     //邀请码
-    private String invite;
+    private String invite="0";//0为没有
     //姓名
     private String name;
     //电子邮件
@@ -32,23 +32,26 @@ public class CloudReg {
     }
 
     public void doReg(){
+        //状态初始化
         username_status=true;
         invite_status=true;
         reg_status=false;
+        //判断用户名是否重复
         if(link.isUserName(user.getUname())){
             username_status=false;
             return;
         }
-        if(!invite.isEmpty()&&!invite.equals("0"))
-            if(!link.isInvite(invite)){
-                invite_status=false;
-                return;
-            }
-        if(link.Reg(user,name,Email,gender,invite))
+        //填写则，判断邀请码是否存在
+        if(!invite.equals("0")&&!link.isInvite(invite)){
+            invite_status=false;
+            return;
+        }
+        //判断注册是否成功
+        if(link.reg(user,name,Email,gender,invite))
             reg_status=true;
     }
 
-    public String getMsg(){return link.getInfo();}
+    public String getMsg(){return link.getMsg();}
 
     public boolean isUsername_status() {
         return username_status;

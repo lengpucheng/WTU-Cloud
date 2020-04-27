@@ -12,4 +12,12 @@ SELECT password,name,age,sho.cid FROM stu left JOIN sho on stu.`password`=sho.si
 -- 内连接查询  只显示都有的
 -- SELECT password,name,age,sho.cid FROM stu inner JOIN sho on stu.`password`=sho.sid
 
-
+--嵌套左链接查询
+SELECT 
+organ_peo.OID,organ_ment.MID,organ.NAME,organ_ment.MENTNAME 
+FROM organ_peo 
+LEFT JOIN organ 
+	on organ_peo.OID=organ.OID
+	LEFT JOIN organ_ment
+		on organ_peo.MID=organ_ment.MID
+		WHERE organ_peo.UID='';

@@ -71,22 +71,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/username"
@@ -95,8 +92,14 @@
                     <EditText
                         android:id="@+id/reg_uname"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_username"
                         android:inputType="textPersonName" />
@@ -104,15 +107,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/password"
@@ -121,8 +124,14 @@
                     <EditText
                         android:id="@+id/reg_password"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_passwrod"
                         android:inputType="textPassword" />
@@ -130,15 +139,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/password_check"
@@ -147,8 +156,14 @@
                     <EditText
                         android:id="@+id/reg_password_check"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_password_check"
                         android:inputType="textPassword" />
@@ -156,15 +171,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/passinfo"
@@ -173,8 +188,14 @@
                     <EditText
                         android:id="@+id/reg_passinfo"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_reg_passinfor"
                         android:inputType="textPersonName" />
@@ -182,15 +203,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/passkey"
@@ -199,8 +220,14 @@
                     <EditText
                         android:id="@+id/reg_passkey"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_reg_passkey"
                         android:inputType="textPassword" />
@@ -208,15 +235,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/invitcode"
@@ -225,8 +252,14 @@
                     <EditText
                         android:id="@+id/reg_invitcode"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_reg_invitcode"
                         android:inputType="textPersonName" />
@@ -234,15 +267,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/Email"
@@ -251,8 +284,14 @@
                     <EditText
                         android:id="@+id/reg_Email"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_reg_Email"
                         android:inputType="textEmailAddress" />
@@ -260,15 +299,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/name"
@@ -277,8 +316,14 @@
                     <EditText
                         android:id="@+id/reg_name"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:ems="10"
                         android:hint="@string/hint_reg_name"
                         android:inputType="textPersonName" />
@@ -286,15 +331,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_height="55dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/box_border_selector"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/peo_gender"
@@ -303,24 +348,31 @@
                     <Spinner
                         android:id="@+id/reg_gender"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_weight="3"
+                        android:background="@android:drawable/editbox_background_normal"
                         android:entries="@array/gender" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="65dp">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/box_border_selector">
 
                     <Button
                         android:id="@+id/reg_ok"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="75dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginEnd="75dp"
+                        android:layout_marginBottom="50dp"
                         android:text="@string/registere"
                         android:textColor="#2196F3"
                         android:textSize="18sp"
