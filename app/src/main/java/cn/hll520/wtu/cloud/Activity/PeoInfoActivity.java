@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import cn.hll520.wtu.cloud.Activity.Login.LoginViewModel;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;
 import cn.hll520.wtu.cloud.databinding.ActivityPeoInfoBinding;
@@ -25,6 +28,7 @@ import cn.hll520.wtu.cloud.repository.PeopleRepository;
 
 public class PeoInfoActivity extends AppCompatActivity {
     ActivityPeoInfoBinding binding;
+    PeoInfoViewModel mViewModel;
     People people=new People();
     Context context;
     Activity activity;
@@ -32,12 +36,18 @@ public class PeoInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_peo_info);
+        mViewModel = ViewModelProviders.of(this).get(PeoInfoViewModel.class);
         int _ID= getIntent().getIntExtra("_ID",0);
-//        people=new PeopleRepository(this).getPeoForID(_ID);
+        mViewModel.getPeople(_ID).observe(this, new Observer<People>() {
+            @Override
+            public void onChanged(People peo) {
+                //显示数据
+                people=peo;
+                iniData(peo);
+            }
+        });
         context=this;
         activity=this;
-        //显示数据
-        iniData();
         //触发
         onClick();
 
@@ -108,8 +118,8 @@ public class PeoInfoActivity extends AppCompatActivity {
         });
     }
 
-    private void iniData() {
-        binding.dataName.setText(String.valueOf(getIntent().getIntExtra("_ID",0)));
+    private void iniData(People people) {
+        binding.dataName.setText(people.getName());
         binding.dataOrg.setText(people.getMainOrg());
         binding.dataMent.setText(people.getMainMent());
         binding.dataPosit.setText(people.getMainPositior());
@@ -130,19 +140,14 @@ public class PeoInfoActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    String tel = String.format("tel:%s", people.getPhone());
-                    Uri uri = Uri.parse(tel);
-                    Intent in = new Intent(Intent.ACTION_CALL, uri);
-                    startActivity(in);
-                } else {
-                    Toast.makeText(this, "需要呼叫权限才能拨打电话哦", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                break;
-        }
+        if (requestCode == 1)
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                String tel = String.format("tel:%s", people.getPhone());
+                Uri uri = Uri.parse(tel);
+                Intent in = new Intent(Intent.ACTION_CALL, uri);
+                startActivity(in);
+            } else {
+                Toast.makeText(this, "需要呼叫权限才能拨打电话哦", Toast.LENGTH_SHORT).show();
+            }
     }
 }

@@ -28,4 +28,10 @@ public interface PeopleDao {
 
     @Query("SELECT * FROM PEOPLE_INFO WHERE _ID=:peo_id")
     People getPeoForID(int peo_id);
+
+    @Query("DELETE FROM PEOPLE_INFO")
+    void out_login();
+
+    @Query("SELECT * FROM PEOPLE_INFO WHERE UID=:UID")
+    People getPeoForUID(int UID);
 }

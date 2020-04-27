@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WTUcloud</string>
+    <string name="app_name">纺大云</string>
     <string name="Info">消息</string>
     <string name="people">联系人</string>
     <string name="menu_course">课表</string>
@@ -7,7 +7,7 @@
     <string name="addButton">添加按钮</string>
     <string name="avatar">头像</string>
     <string name="dome_name">玲儿林</string>
-    <string name="dome_phone">+86-15527094032</string>
+    <string name="dome_phone">+8615527094032</string>
     <string name="dome_ment">代码部</string>
     <string name="login_forgetPass">忘记密码</string>
     <string name="login_registered">用户注册</string>
@@ -39,4 +39,42 @@
     <string name="app_btout">返回</string>
     <string name="app_share">分享</string>
     <string name="peo_regtime">注册时间</string>
+    <string name="app_ing_1">正在努力工作中！</string>
+    <string name="dome_regtime">注册时间：2020/04/04</string>
+    <string name="my_center_edit">编辑资料</string>
+    <string name="app_admin">管理控制台</string>
+    <string name="edit_password">修改密码</string>
+    <string name="refresh_data">刷新数据</string>
+    <string name="my_cleanroom">清理缓存</string>
+    <string name="outlogin">退出登录</string>
+    <string name="ico">图标</string>
+    <string name="my_center">个人中心</string>
+    <string name="search_info">点击搜索聊天记录</string>
+    <string name="aboutApp">\@2020 lPC@hll520.cn</string>
+    <string name="checkImg">验证码</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="password_check">确认密码</string>
+    <string name="passinfo">密保问题</string>
+    <string name="passkey">密保答案</string>
+    <string name="invitcode">邀请码</string>
+    <string name="Email">电子邮件</string>
+    <string name="name">姓名</string>
+    <string name="registere">注册</string>
+    <string name="hint_username">请设置非纯数字用户名</string>
+    <string name="hint_passwrod">请输入至少6位长度密码</string>
+    <string name="hint_password_check">请再次输入密码</string>
+    <string name="hint_reg_passinfor">请设置密保问题</string>
+    <string name="hint_reg_passkey">请设置密保答案</string>
+    <string name="hint_reg_invitcode">请输入邀请码（如无请留空）</string>
+    <string name="hint_reg_Email">输入你的电子电子邮件</string>
+    <string name="hint_reg_name">请告知您的姓名</string>
+    <string name="reg_title">用户注册</string>
+    <string name="working">正在努力工作中...</string>
+
+
+    <string-array name="gender">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 </resources>

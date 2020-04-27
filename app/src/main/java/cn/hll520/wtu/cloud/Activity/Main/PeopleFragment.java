@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -35,13 +36,15 @@ public class PeopleFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle   savedInstanceState) {
         return inflater.inflate(R.layout.people_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        TextView Tile=getActivity().findViewById(R.id.MainTile);
+        Tile.setText("联系人");
         mViewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
 
         //在Fragment中使用requireActivity()获取当前活动

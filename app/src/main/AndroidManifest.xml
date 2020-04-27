@@ -12,15 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.PeoInfoActivity"></activity>
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name=".Activity.RegisteredActivity"></activity>
+        <activity android:name=".Activity.StartUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.Main.MainActivity"></activity>
+        <activity android:name=".Activity.Main.MycenterActivity" />
+        <activity android:name=".Activity.PeoInfoActivity" />
+        <activity android:name=".Activity.Login.LoginActivity"></activity>
+        <activity android:name=".Activity.Main.MainActivity" />
     </application>
 
 </manifest>

@@ -31,7 +31,7 @@ public class UserRepository {
     //获取根据登录状态
     public User getUser_login(){ return userDao.getUser_login(1); }
 
-    //获取用户更具UID
+    //获取用户从UID
     public User getUser_UID(int UID){return userDao.getUser_UID(UID);}
 
     //插入如果有重复就跟新
@@ -42,7 +42,6 @@ public class UserRepository {
 
     //删除
     public void delUser(User... users){new DeleteAsyncTask(userDao).execute(users);}
-
 
 
 

@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity;
+package cn.hll520.wtu.cloud.Activity.Login;
 
 import android.annotation.SuppressLint;
 import android.app.Application;

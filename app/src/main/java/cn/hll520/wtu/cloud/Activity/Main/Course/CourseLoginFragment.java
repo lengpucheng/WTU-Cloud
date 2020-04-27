@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.Main;
+package cn.hll520.wtu.cloud.Activity.Main.Course;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -11,30 +11,28 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import cn.hll520.wtu.cloud.R;
 
-public class InfoFragment extends Fragment {
+public class CourseLoginFragment extends Fragment {
 
-    private InfoViewModel mViewModel;
+    private CourseLoginViewModel mViewModel;
 
-    public static InfoFragment newInstance() {
-        return new InfoFragment();
+    public static CourseLoginFragment newInstance() {
+        return new CourseLoginFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.info_fragment, container, false);
+        return inflater.inflate(R.layout.course_login_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(InfoViewModel.class);
-        TextView Tile=getActivity().findViewById(R.id.MainTile);
-        Tile.setText("消息");
+        mViewModel = ViewModelProviders.of(this).get(CourseLoginViewModel.class);
+        // TODO: Use the ViewModel
     }
 
 }

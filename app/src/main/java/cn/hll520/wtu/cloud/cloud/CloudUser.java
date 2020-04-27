@@ -22,19 +22,19 @@ public class CloudUser {
         this.user=user;
         login_do();
     }
-
+    //查看是否登录
     public boolean isLogin() {
         return login;
     }
-
+    //设置登录状态
     public void setLogin(boolean login) {
         this.login = login;
     }
-
+    //获取登录用户的信息
     public User getUser() {
         return user;
     }
-
+    //传入登录用户
     public void setUser(User user) {
         this.user = user;
         login_do();
@@ -45,6 +45,7 @@ public class CloudUser {
     /*
     * ————————————————————封装的登录工具——————————————————
     * */
+    //登录
     private void login_do(){
         if(user.getUID()==0)
             login=link.login(user.getUname(),user.getPassword());

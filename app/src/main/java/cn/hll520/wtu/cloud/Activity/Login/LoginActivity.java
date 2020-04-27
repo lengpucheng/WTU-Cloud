@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity;
+package cn.hll520.wtu.cloud.Activity.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import cn.hll520.wtu.cloud.Activity.Main.MainActivity;
+import cn.hll520.wtu.cloud.Activity.RegisteredActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        //登录
         binding.loginGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +49,15 @@ public class LoginActivity extends AppCompatActivity {
                     mViewModel.setUser(uname,pass);
             }
         });
+        //注册
+        binding.loginRegist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this, RegisteredActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private boolean isCheck(String uname, String pass) {

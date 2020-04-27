@@ -44,10 +44,11 @@ public class PeopleRepository {
         new UpdateAsyncTask(peopleDao).execute(people);
     }
 
-    //查询更具 _id
-    public People getPeoForID(int _ID) {
-        return peopleDao.getPeoForID(_ID);
-    }
+    //查询唯一 _id
+    public People getPeoForID(int _ID) { return peopleDao.getPeoForID(_ID); }
+
+    //查询根据UID
+    public People getPeoForUID(int UID){return  peopleDao.getPeoForUID(UID);}
 
     //插入，存在则跟新
     public void addPeo(People... people) {
@@ -55,6 +56,8 @@ public class PeopleRepository {
     }
 
 
+    //登出清空
+    public void out_login(){peopleDao.out_login();}
     /*——————————————————————————封装的AsynTask线程————————————————————————
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
