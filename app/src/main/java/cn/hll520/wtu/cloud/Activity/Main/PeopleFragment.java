@@ -30,9 +30,6 @@ public class PeopleFragment extends Fragment {
     private RecyclerView recyclerView;
     private PeoAdapter adapter;
     private LiveData<List<People>> peos;
-    public static PeopleFragment newInstance() {
-        return new PeopleFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -62,6 +59,8 @@ public class PeopleFragment extends Fragment {
         peos.observe(getViewLifecycleOwner(), new Observer<List<People>>() {
             @Override
             public void onChanged(List<People> people) {
+                if(peos==null||peos.getValue().size()<1)
+                    peos=mViewModel.getAllPeos();
                 //更新视图
                 adapter.submitList(people);
             }
