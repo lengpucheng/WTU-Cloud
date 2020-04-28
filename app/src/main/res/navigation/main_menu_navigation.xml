@@ -19,5 +19,18 @@
         android:id="@+id/courseFragment"
         android:name="cn.hll520.wtu.cloud.Activity.Main.CourseFragment"
         android:label="course_fragment"
-        tools:layout="@layout/course_fragment" />
+        tools:layout="@layout/course_fragment" >
+        <action
+            android:id="@+id/action_courseFragment_to_courseLoginFragment"
+            app:destination="@id/courseLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseLoginFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.Course.CourseLoginFragment"
+        android:label="course_login_fragment"
+        tools:layout="@layout/course_login_fragment" >
+        <action
+            android:id="@+id/action_courseLoginFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+    </fragment>
 </navigation>

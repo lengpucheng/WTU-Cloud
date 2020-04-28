@@ -76,10 +76,27 @@
     <string name="updata_text_info">请回答下列问题</string>
     <string name="updata_hint_key">请在此输入答案</string>
     <string name="updata_newpass">新密码</string>
+    <string name="save">保存</string>
+    <string name="course_edit_Tilet">编辑课程</string>
+    <string name="course_hint_name">请输入课程名</string>
+    <string name="course_hint_room">请输入上课地点</string>
+    <string name="course_hint_teacher">请输入课程教师</string>
+    <string name="course_hint_test">请输入考试方式</string>
 
 
     <string-array name="gender">
         <item>男</item>
         <item>女</item>
+    </string-array>
+
+
+    <string-array name="week">
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+        <item>星期日</item>
     </string-array>
 </resources>
