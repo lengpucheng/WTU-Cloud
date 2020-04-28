@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onChanged(CloudUser cloudUser) {
                 if(cloudUser.isLogin()) {
                     Toast.makeText(LoginActivity.this, "登录成功\n上次登录时间："+cloudUser.getTIME(), Toast.LENGTH_SHORT).show();
-//                    mViewModel.addUser(cloudUser.getUser());
+                    mViewModel.addUser(cloudUser.getUser());
                     Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
