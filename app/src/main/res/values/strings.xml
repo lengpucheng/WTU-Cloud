@@ -71,6 +71,11 @@
     <string name="hint_reg_name">请告知您的姓名</string>
     <string name="reg_title">用户注册</string>
     <string name="working">正在努力工作中...</string>
+    <string name="updata_pass_input">请输入用户名/UID或者学号来查找你的用户</string>
+    <string name="updata_bt_find">查找用户</string>
+    <string name="updata_text_info">请回答下列问题</string>
+    <string name="updata_hint_key">请在此输入答案</string>
+    <string name="updata_newpass">新密码</string>
 
 
     <string-array name="gender">
