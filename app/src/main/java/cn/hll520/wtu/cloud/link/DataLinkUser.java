@@ -56,7 +56,7 @@ public class DataLinkUser {
     }
 
     //根据用户名或UID查询信息
-    public User getUser(String userName){return find_user(userName,0);}
+    public User getUser(String userNameOrSID){return find_user(userNameOrSID,0);}
     public User getUser(int UID){return find_user("",UID);}
 
     //判断用户名是否存在，重复/存在返回true
@@ -78,12 +78,13 @@ public class DataLinkUser {
         return addMent(UID,OID,MID,101);
     }
 
+    //修改密码
+    public boolean updataUserPass(int UID,String passKey,String newPass){return _upUser(UID,passKey,newPass);}
 
 
     /*
     * ————————————————————————————————————-封装的登录实现————————————————————————————————————————
     * */
-
     //执行登录
     private boolean login_do() {
         if (LINK.getConnection() == null) {
@@ -169,18 +170,19 @@ public class DataLinkUser {
     * */
 
     //查询用户
-    private User find_user(String username,int UID){
+    private User find_user(String usernameOrSID,int UID){
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
             MSG="网络异常";
             return null;
         }
         User user=null;
-        String sql = "SELECT uid,uname,SID,PASSINFO,LOGIN FROM user WHERE uname=? or uid=?";
+        String sql = "SELECT uid,uname,SID,PASSINFO,LOGIN FROM user WHERE uname=? or uid=? or SID=?";
         try {
             PreparedStatement pres=LINK.getConnection().prepareCall(sql);
-            pres.setString(1,username);
+            pres.setString(1,usernameOrSID);
             pres.setInt(2,UID);
+            pres.setString(3,usernameOrSID);
             ResultSet res = pres.executeQuery();
             while (res.next()){
                 user=new User();
@@ -364,6 +366,33 @@ public class DataLinkUser {
             return false;
         }
         return true;
+    }
+
+    private boolean _upUser(int UID,String passKey,String newPass){
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return false;
+        }
+        String sql="UPDATE user SET PASSWORD=? WHERE UID=? AND PASSKEY=?";
+        try {
+            PreparedStatement pres=LINK.getConnection().prepareCall(sql);
+            pres.setString(1,newPass);
+            pres.setInt(2,UID);
+            pres.setString(3,passKey);
+
+            MSG="答案错误";
+            int i= 0;
+            i=pres.executeUpdate();
+            pres.close();
+            Log.e(TAG, "SQL: "+sql );
+            return i!=0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.e(TAG, "_upUser: ",e );
+            MSG="网络链接失败";
+            return false;
+        }
     }
 
 

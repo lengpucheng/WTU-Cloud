@@ -1,8 +1,6 @@
 package cn.hll520.wtu.cloud.cloud;
 
 
-import android.os.AsyncTask;
-
 import cn.hll520.wtu.cloud.link.DataLinkUser;
 import cn.hll520.wtu.cloud.model.User;
 

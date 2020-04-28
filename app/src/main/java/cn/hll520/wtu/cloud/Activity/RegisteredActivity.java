@@ -1,5 +1,6 @@
 package cn.hll520.wtu.cloud.Activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import cn.hll520.wtu.cloud.model.User;
 
 public class RegisteredActivity extends AppCompatActivity {
     private ActivityRegisteredBinding binding;
+    @SuppressLint("HandlerLeak")//忽略警告
     Handler handler=new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -99,6 +101,7 @@ public class RegisteredActivity extends AppCompatActivity {
             binding.regPasskey.setError("答案不能为空");
             return;
         }
+        user.setPasskey(str);
         //邀请码
         str=binding.regInvitcode.getText().toString();
         if(!str.isEmpty())

@@ -16,10 +16,10 @@ import cn.hll520.wtu.cloud.repository.UserRepository;
 
 
 public class MycenterViewModel extends AndroidViewModel {
-    PeopleRepository peopleRepository;
-    UserRepository userRepository;
-    MutableLiveData<User> _user=new MutableLiveData<>();
-    MutableLiveData<People> _peo=new MutableLiveData<>();
+    private PeopleRepository peopleRepository;
+    private UserRepository userRepository;
+    private MutableLiveData<User> _user=new MutableLiveData<>();
+    private MutableLiveData<People> _peo=new MutableLiveData<>();
 
     public MycenterViewModel(@NonNull Application application) {
         super(application);
@@ -39,6 +39,7 @@ public class MycenterViewModel extends AndroidViewModel {
     * ____________封装的类————————————————————————
     * */
     //获取登录用户
+    @SuppressLint("StaticFieldLeak")
     class GETUSER extends  AsyncTask<Void,Void,Void>{
         @Override
         protected Void doInBackground(Void... voids) {

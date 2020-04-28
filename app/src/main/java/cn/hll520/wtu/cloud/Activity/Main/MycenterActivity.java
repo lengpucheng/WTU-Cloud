@@ -1,23 +1,23 @@
 package cn.hll520.wtu.cloud.Activity.Main;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.Objects;
 
 import cn.hll520.wtu.cloud.Activity.Login.LoginActivity;
 import cn.hll520.wtu.cloud.Activity.PeoInfoActivity;
+import cn.hll520.wtu.cloud.Activity.updataPassActivity;
 import cn.hll520.wtu.cloud.R;
-import cn.hll520.wtu.cloud.databinding.ActivityMainBinding;
 import cn.hll520.wtu.cloud.databinding.ActivityMycenterBinding;
 import cn.hll520.wtu.cloud.model.People;
-import cn.hll520.wtu.cloud.model.User;
 
 public class MycenterActivity extends AppCompatActivity {
     MycenterViewModel mViewModel;
@@ -26,7 +26,7 @@ public class MycenterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=DataBindingUtil.setContentView(this,R.layout.activity_mycenter);
-        mViewModel = ViewModelProviders.of(this).get(MycenterViewModel.class);
+        mViewModel=new ViewModelProvider(this).get(MycenterViewModel.class);
 
         //初始化
         mViewModel.iniData();
@@ -54,7 +54,7 @@ public class MycenterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MycenterActivity.this, PeoInfoActivity.class);
-                intent.putExtra("_ID",mViewModel.getInfo().getValue().get_ID());
+                intent.putExtra("_ID", Objects.requireNonNull(mViewModel.getInfo().getValue()).get_ID());
                 startActivity(intent);
             }
         });
@@ -67,6 +67,16 @@ public class MycenterActivity extends AppCompatActivity {
                 Intent intent=new Intent(MycenterActivity.this, LoginActivity.class);
                 //将这个意图设置为窗口顶端，并释放其他窗口
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        //修改密码
+        binding.UpMyPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MycenterActivity.this, updataPassActivity.class);
+                intent.putExtra("UID", Objects.requireNonNull(mViewModel.getUser().getValue()).getUID());
                 startActivity(intent);
             }
         });

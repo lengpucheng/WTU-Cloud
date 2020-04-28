@@ -13,7 +13,7 @@ public class CloudReg {
     //用户信息
     private User user;
     //邀请码
-    private String invite="0";//0为没有
+    private String invite;//0为没有
     //姓名
     private String name;
     //电子邮件
@@ -23,6 +23,8 @@ public class CloudReg {
     //获取链接
     private DataLinkUser link=new DataLinkUser();
 
+    public CloudReg(){}
+    //有参构造
     public CloudReg(User user, String invite, String name, String email, String gender) {
         this.user = user;
         this.invite = invite;
@@ -30,12 +32,24 @@ public class CloudReg {
         Email = email;
         this.gender = gender;
     }
+    //修改密码
+    public boolean upPass(int UID,String passKey,String newPass){
+        return link.updataUserPass(UID,passKey,newPass);
+    }
 
+
+
+    //注册
     public void doReg(){
         //状态初始化
         username_status=true;
         invite_status=true;
         reg_status=false;
+
+        //判空
+        if(user==null||invite==null||name==null||Email==null||gender==null)
+            return;
+
         //判断用户名是否重复
         if(link.isUserName(user.getUname())){
             username_status=false;
@@ -51,20 +65,31 @@ public class CloudReg {
             reg_status=true;
     }
 
-    public String getMsg(){return link.getMsg();}
+    //获取用户
+    public User getUser(String all){
+        if(all.matches("[0-9]+"))
+            return link.getUser(Integer.parseInt(all));
+        else
+            return link.getUser(all);
+    }
+    public User getUser(int UID){return link.getUser(UID);}
 
+    //获取异常信息
+    public String getMsg(){return link.getMsg();}
+    //获取状态码
     public boolean isUsername_status() {
         return username_status;
     }
-
     public boolean isInvite_status() {
         return invite_status;
     }
-
     public boolean isReg_status() {
         return reg_status;
     }
 
+
+
+    //getset
     public CloudReg setUser(User user) {
         this.user = user;
         return this;

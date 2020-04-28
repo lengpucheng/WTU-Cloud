@@ -1,17 +1,18 @@
 package cn.hll520.wtu.cloud.Activity.Login;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import cn.hll520.wtu.cloud.Activity.Main.MainActivity;
 import cn.hll520.wtu.cloud.Activity.RegisteredActivity;
+import cn.hll520.wtu.cloud.Activity.updataPassActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_login);
-        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        mViewModel=new ViewModelProvider(this).get(LoginViewModel.class);
         //监听
         mViewModel.getCloudUser().observe(this, new Observer<CloudUser>() {
             @Override
@@ -57,7 +58,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //忘记密码
+        binding.loginForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this, updataPassActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean isCheck(String uname, String pass) {
