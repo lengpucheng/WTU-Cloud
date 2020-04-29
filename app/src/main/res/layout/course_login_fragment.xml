@@ -12,6 +12,28 @@
         android:orientation="vertical"
         tools:context=".Activity.Main.Course.CourseLoginFragment">
 
+        <LinearLayout
+            android:id="@+id/course_login_ing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar3"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_ing_1" />
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -22,7 +44,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/name"
+                    android:id="@+id/course_login_sid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -35,7 +57,7 @@
                     android:textSize="24sp" />
 
                 <EditText
-                    android:id="@+id/pass"
+                    android:id="@+id/course_login_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -48,14 +70,14 @@
                     android:textSize="24sp" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/course_login_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@android:drawable/editbox_background_normal" />
 
                 <RadioGroup
-                    android:id="@+id/xueQi"
+                    android:id="@+id/course_login_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -78,7 +100,7 @@
                 </RadioGroup>
 
                 <EditText
-                    android:id="@+id/check"
+                    android:id="@+id/course_login_check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -91,7 +113,7 @@
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/checkIMG"
+                    android:id="@+id/course_login_checkIMG"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
@@ -109,7 +131,7 @@
                     android:textSize="12sp" />
 
                 <Button
-                    android:id="@+id/ok"
+                    android:id="@+id/coures_login_ok"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"

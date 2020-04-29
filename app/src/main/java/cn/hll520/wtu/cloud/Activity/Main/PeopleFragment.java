@@ -39,7 +39,7 @@ public class PeopleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         TextView Tile=requireActivity().findViewById(R.id.MainTile);
         Tile.setText("联系人");
-        mViewModel=new ViewModelProvider(requireParentFragment()).get(PeopleViewModel.class);
+        mViewModel=new ViewModelProvider(this).get(PeopleViewModel.class);
         //在Fragment中使用requireActivity()获取当前活动
         RecyclerView recyclerView = requireActivity().findViewById(R.id.people_RecyclerView);
         //设置组件维度

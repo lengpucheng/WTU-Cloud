@@ -27,7 +27,6 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +51,7 @@ public class JWhelper {
     private static HttpPost httpPost = null;//Post请求
     private static int statusCode = 0;//状态码
     private static String tepUri = "";//临时存储重定向页面
-    private static String eff = "";//错误原因
+    private static String MSG = "";//错误原因
     private static Bitmap checkIMG = null;//验证码
     private static List<Course> courses=new ArrayList<>();
     public JWhelper() {
@@ -60,8 +59,8 @@ public class JWhelper {
     }
 
     //获取错误信息
-    public String getEff() {
-        return eff;
+    public String getMSG() {
+        return MSG;
     }
 
     //获取验证码
@@ -314,7 +313,7 @@ public class JWhelper {
     }
 
     //解析课表-----注意 2020年的上学期参数是 2019，12  （即选课的时候）  2020下学期是 2020，3
-    public boolean isCourse(String year,String semester){
+    public boolean isCourse(String year,String semester,int who){
         Log.e("JWXTEFF", "\n——————————————————————课表——————————————————");
         String kcbUri = "http://jwglxt.wtu.edu.cn/kbcx/xskbcx_cxXsKb.html?gnmkdm=N253508";
         httpPost=new HttpPost(kcbUri);
@@ -364,6 +363,7 @@ public class JWhelper {
         for (Iterator iterator = timeTable.iterator(); iterator.hasNext();){
             JSONObject lesson = (JSONObject) iterator.next();
             Course course=new Course();
+            course.setWho(who);
             course.setSID(usernam);
             course.setName(lesson.getString("kcmc"));
             course.setCampus(lesson.getString("xqmc"));
@@ -426,7 +426,7 @@ public class JWhelper {
 
     //错误提示
     private boolean toEffexecute(String EFF) {
-        eff = EFF;
+        MSG = EFF;
         Log.e("JWXTEFF", EFF);
         return false;
     }

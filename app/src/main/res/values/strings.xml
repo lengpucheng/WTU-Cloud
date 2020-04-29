@@ -82,6 +82,9 @@
     <string name="course_hint_room">请输入上课地点</string>
     <string name="course_hint_teacher">请输入课程教师</string>
     <string name="course_hint_test">请输入考试方式</string>
+    <string name="course_impro">导入课程</string>
+    <string name="course_add">添加课程</string>
+    <string name="course_uploda">上传课程</string>
 
 
     <string-array name="gender">

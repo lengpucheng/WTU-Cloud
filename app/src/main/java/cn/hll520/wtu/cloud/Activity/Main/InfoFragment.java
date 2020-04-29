@@ -1,5 +1,6 @@
 package cn.hll520.wtu.cloud.Activity.Main;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -32,7 +33,7 @@ public class InfoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(InfoViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(InfoViewModel.class);
         TextView Tile=getActivity().findViewById(R.id.MainTile);
         Tile.setText("消息");
     }

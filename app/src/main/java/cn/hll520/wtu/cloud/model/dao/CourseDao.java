@@ -24,4 +24,10 @@ public interface CourseDao {
 
     @Query("SELECT * FROM COURSE_TABLE")
     LiveData<List<Course>> getCourseAll();
+
+    @Query("SELECT * FROM COURSE_TABLE WHERE who=:who")
+    LiveData<List<Course>> getCourseWho(int who);
+    //删除全部
+    @Query("DELETE FROM COURSE_TABLE WHERE who=:who")
+    void deleAllWho(int who);
 }

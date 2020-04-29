@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -25,21 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView menu=findViewById(R.id.mainMenubottom);
-        //按钮
-        ImageView menubar=findViewById(R.id.mainAdd);
-        //工具栏
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
-        //绑定工具栏
-        setSupportActionBar(toolbar);
-        //打开工具栏
-        menubar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openOptionsMenu();
-            }
-        });
-
-
         //获取导航控制
         NavController controller= Navigation.findNavController(this,R.id.mainfragment);
         //绑定底部菜单与导航

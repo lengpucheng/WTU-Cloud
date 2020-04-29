@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/course_menu_impro"
+        android:title="@string/course_impro" />
+    <item
+        android:id="@+id/course_menu_add"
+        android:title="@string/course_add" />
+    <item
+        android:id="@+id/course_menu_uploda"
+        android:title="@string/course_uploda" />
+</menu>
