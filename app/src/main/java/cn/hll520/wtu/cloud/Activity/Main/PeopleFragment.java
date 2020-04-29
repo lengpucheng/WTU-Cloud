@@ -1,24 +1,22 @@
 package cn.hll520.wtu.cloud.Activity.Main;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.adapter.PeoAdapter;
@@ -27,7 +25,6 @@ import cn.hll520.wtu.cloud.model.People;
 public class PeopleFragment extends Fragment {
 
     private PeopleViewModel mViewModel;
-    private RecyclerView recyclerView;
     private PeoAdapter adapter;
     private LiveData<List<People>> peos;
 
@@ -40,12 +37,11 @@ public class PeopleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TextView Tile=getActivity().findViewById(R.id.MainTile);
+        TextView Tile=requireActivity().findViewById(R.id.MainTile);
         Tile.setText("联系人");
-        mViewModel = ViewModelProviders.of(this).get(PeopleViewModel.class);
-
+        mViewModel=new ViewModelProvider(requireParentFragment()).get(PeopleViewModel.class);
         //在Fragment中使用requireActivity()获取当前活动
-        recyclerView=requireActivity().findViewById(R.id.people_RecyclerView);
+        RecyclerView recyclerView = requireActivity().findViewById(R.id.people_RecyclerView);
         //设置组件维度
         recyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         //初始化适配器
@@ -59,7 +55,7 @@ public class PeopleFragment extends Fragment {
         peos.observe(getViewLifecycleOwner(), new Observer<List<People>>() {
             @Override
             public void onChanged(List<People> people) {
-                if(peos==null||peos.getValue().size()<1)
+                if(peos==null|| Objects.requireNonNull(peos.getValue()).size()<1)
                     peos=mViewModel.getAllPeos();
                 //更新视图
                 adapter.submitList(people);

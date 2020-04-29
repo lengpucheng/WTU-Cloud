@@ -13,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.hll520.wtu.cloud.R;
+import cn.hll520.wtu.cloud.databinding.CourseLoginFragmentBinding;
 
 public class CourseLoginFragment extends Fragment {
 
     private CourseLoginViewModel mViewModel;
-
+    private CourseLoginFragmentBinding binding;
     public static CourseLoginFragment newInstance() {
         return new CourseLoginFragment();
     }
@@ -25,7 +26,9 @@ public class CourseLoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.course_login_fragment, container, false);
+        binding=CourseLoginFragmentBinding.bind(inflater.inflate(R.layout.course_login_fragment, container, false));
+
+        return binding.getRoot();
     }
 
     @Override
