@@ -30,4 +30,7 @@ public interface CourseDao {
     //删除全部
     @Query("DELETE FROM COURSE_TABLE WHERE who=:who")
     void deleAllWho(int who);
+    //获取通过_id
+    @Query("SELECT * FROM COURSE_TABLE WHERE _id=:id")
+    LiveData<Course> findCourse(int id);
 }

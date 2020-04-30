@@ -28,6 +28,10 @@ public class CourseRepository {
     public LiveData<List<Course>> getWhoCourse(int who){return courseDao.getCourseWho(who);}
     //删除全部
     public void delWhoCourse(int who){courseDao.deleAllWho(who);}
+    //根据_id获取课程
+    public LiveData<Course> getOneCourse(int id){return courseDao.findCourse(id);}
+
+
     //添加
     public void addCourse(Course... courses){
         new AddCourse(courseDao).execute(courses);}
