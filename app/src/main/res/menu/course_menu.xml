@@ -8,6 +8,9 @@
         android:id="@+id/course_menu_add"
         android:title="@string/course_add" />
     <item
+        android:id="@+id/course_menu_setweek"
+        android:title="@string/setWeek" />
+    <item
         android:id="@+id/course_menu_uploda"
         android:title="@string/course_uploda" />
 </menu>

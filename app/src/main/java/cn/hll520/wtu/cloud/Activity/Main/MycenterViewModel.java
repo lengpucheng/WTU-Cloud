@@ -9,6 +9,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Objects;
+
 import cn.hll520.wtu.cloud.model.People;
 import cn.hll520.wtu.cloud.model.User;
 import cn.hll520.wtu.cloud.repository.PeopleRepository;
@@ -58,7 +60,7 @@ public class MycenterViewModel extends AndroidViewModel {
         @Override
         protected Void doInBackground(Void... voids) {
             User user=userRepository.getUser_login();
-            user.setLogin(false);
+            Objects.requireNonNull(user).setLogin(false);
             userRepository.upUser(user);
             peopleRepository.out_login();
             return null;

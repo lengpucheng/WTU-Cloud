@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import cn.hll520.wtu.cloud.model.Course;
 import cn.hll520.wtu.cloud.repository.CourseRepository;
@@ -67,7 +68,7 @@ public class CourseLoginViewModel extends AndroidViewModel {
         @Override
         protected Void doInBackground(Void... voids) {
             //获取当前登录用户UID
-            int UID=userRepository.getUser_login().getUID();
+            int UID= userRepository.getUser_login().getUID();
             //模拟登录，失败则修改提示信息
             if(helper.login(sid, pass, check))
                 if(helper.getURI())//获取登录后的页面

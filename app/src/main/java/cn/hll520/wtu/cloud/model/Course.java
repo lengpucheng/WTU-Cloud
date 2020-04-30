@@ -148,4 +148,9 @@ public class Course {
     public void setTest(String test) {
         this.test = test;
     }
+
+    public String showInfo(){
+        return "课程："+name+"\n地点："+campus+room+"\n时间："+wmin+"-"+wmax+"周"+week
+            +tmin+"-"+tmax+"节\n老师："+ teacher +job+"\n考试方式："+test;
+    }
 }

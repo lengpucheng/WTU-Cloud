@@ -17,7 +17,7 @@
         tools:layout="@layout/people_fragment" />
     <fragment
         android:id="@+id/courseFragment"
-        android:name="cn.hll520.wtu.cloud.Activity.Main.CourseFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.Course.CourseFragment"
         android:label="course_fragment"
         tools:layout="@layout/course_fragment" >
         <action

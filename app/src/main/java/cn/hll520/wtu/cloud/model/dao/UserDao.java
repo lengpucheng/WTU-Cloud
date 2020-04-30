@@ -30,6 +30,4 @@ public interface UserDao {
 
     @Query("SELECT * FROM USER_LOGIN WHERE UID=:UID")
     User getUser_UID(int UID);
-
-
 }

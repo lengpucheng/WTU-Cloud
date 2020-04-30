@@ -86,6 +86,8 @@ public class CourseLoginFragment extends Fragment {
         mViewModel.getMSG().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                //关闭进度条
+                binding.courseLoginIng.setVisibility(View.GONE);
                 //如果提示信息变化则弹窗
                 if(mViewModel.LOGIN_OK.equals(s)){
                     Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
@@ -93,8 +95,10 @@ public class CourseLoginFragment extends Fragment {
                     NavController controller = Navigation.findNavController(requireView());
                     //跳转页面
                     controller.navigate(R.id.action_courseLoginFragment_to_courseFragment);
-                }else
+                }else{
                     Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                    mViewModel.open();//刷新验证码
+                }
             }
         });
 
@@ -128,6 +132,8 @@ public class CourseLoginFragment extends Fragment {
         //如果是下半年就设定到去年
         if (mViewModel.semester.equals("12"))
             mViewModel.year = String.valueOf(Integer.parseInt(mViewModel.year) - 1);
+        //开启进度条
+        binding.courseLoginIng.setVisibility(View.VISIBLE);
         //登录
         mViewModel.login();
     }
