@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.Main;
+package cn.hll520.wtu.cloud.Activity.Main.Course;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,30 +12,26 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import cn.hll520.wtu.cloud.R;
+import cn.hll520.wtu.cloud.databinding.CourseEditFragmentBinding;
 
-public class InfoFragment extends Fragment {
+public class CourseEditFragment extends Fragment {
 
-    private InfoViewModel mViewModel;
-
-    public static InfoFragment newInstance() {
-        return new InfoFragment();
-    }
-
+    private CourseEditViewModel mViewModel;
+    private CourseEditFragmentBinding binding;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.info_fragment, container, false);
+        binding=CourseEditFragmentBinding.bind(inflater.inflate(R.layout.course_edit_fragment, container, false));
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(InfoViewModel.class);
-        TextView Tile=getActivity().findViewById(R.id.MainTile);
-        Tile.setText("消息");
+        mViewModel=new ViewModelProvider(this).get(CourseEditViewModel.class);
+
     }
 
 }

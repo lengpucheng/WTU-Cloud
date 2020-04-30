@@ -1,13 +1,5 @@
 package cn.hll520.wtu.cloud.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,12 +11,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import cn.hll520.wtu.cloud.Activity.Login.LoginViewModel;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import cn.hll520.wtu.cloud.R;
-import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;
 import cn.hll520.wtu.cloud.databinding.ActivityPeoInfoBinding;
 import cn.hll520.wtu.cloud.model.People;
-import cn.hll520.wtu.cloud.repository.PeopleRepository;
 
 public class PeoInfoActivity extends AppCompatActivity {
     ActivityPeoInfoBinding binding;
@@ -36,7 +33,7 @@ public class PeoInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_peo_info);
-        mViewModel = ViewModelProviders.of(this).get(PeoInfoViewModel.class);
+        mViewModel=new ViewModelProvider(this).get(PeoInfoViewModel.class);
         int _ID= getIntent().getIntExtra("_ID",0);
         mViewModel.getPeople(_ID).observe(this, new Observer<People>() {
             @Override
@@ -127,7 +124,7 @@ public class PeoInfoActivity extends AppCompatActivity {
         binding.dataQQ.setText(people.getQQ());
         binding.dataGender.setText(people.getGender());
         binding.dataBith.setText(people.getBirthday());
-        binding.dataAge.setText("20");
+//        binding.dataAge.setText("20");
         binding.dataCampus.setText(people.getCampus());
         binding.dataCollage.setText(people.getCollege());
         binding.dataClass.setText(people.getClas());

@@ -1,5 +1,6 @@
 package cn.hll520.wtu.cloud.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 
@@ -29,6 +30,7 @@ public class PeoInfoViewModel extends AndroidViewModel {
     private void _findpeo(){new findPeo().execute();}
 
 
+    @SuppressLint("StaticFieldLeak")
     class findPeo extends AsyncTask<Void,Void,Void>{
 
         @Override

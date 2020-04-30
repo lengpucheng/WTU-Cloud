@@ -76,10 +76,57 @@
     <string name="updata_text_info">请回答下列问题</string>
     <string name="updata_hint_key">请在此输入答案</string>
     <string name="updata_newpass">新密码</string>
+    <string name="save">保存</string>
+    <string name="course_edit_Tilet">编辑课程</string>
+    <string name="course_hint_name">请输入课程名</string>
+    <string name="course_hint_room">请输入上课地点</string>
+    <string name="course_hint_teacher">请输入课程教师</string>
+    <string name="course_hint_test">请输入考试方式</string>
+    <string name="course_impro">导入课程</string>
+    <string name="course_add">添加课程</string>
+    <string name="course_uploda">上传课程</string>
+    <string name="one">一</string>
+    <string name="two">二</string>
+    <string name="three">三</string>
+    <string name="week_1">周一</string>
+    <string name="week_2">周二</string>
+    <string name="week_3">周三</string>
+    <string name="week_4">周四</string>
+    <string name="week_5">周五</string>
+    <string name="week_6">周六</string>
+    <string name="week_7">周日</string>
+    <string name="time_1">1</string>
+    <string name="time_2">2</string>
+    <string name="time_3">3</string>
+    <string name="time_4">4</string>
+    <string name="time_5">5</string>
+    <string name="time_6">6</string>
+    <string name="time_7">7</string>
+    <string name="time_8">8</string>
+    <string name="time_9">9</string>
+    <string name="time_10">10</string>
+    <string name="time_11">11</string>
+    <string name="time_12">12</string>
+    <string name="time_13">13</string>
+    <string name="time_14">14</string>
+    <string name="time_15">15</string>
+    <string name="time_16">16</string>
+    <string name="setWeek">设置周数</string>
 
 
     <string-array name="gender">
         <item>男</item>
         <item>女</item>
+    </string-array>
+
+
+    <string-array name="week">
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+        <item>星期日</item>
     </string-array>
 </resources>
