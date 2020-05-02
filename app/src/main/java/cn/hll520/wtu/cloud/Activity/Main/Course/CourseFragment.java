@@ -118,11 +118,18 @@ public class CourseFragment extends Fragment {
             //获取当前课的周期
             int wMIN=course.getWmin();
             int wMax=course.getWmax();
+            //设置不同颜色
+            switch ((course.getWeek()+course.getTmin())%4){
+                case 0:theClass.setBackgroundResource(R.drawable.course_bk_1_ripple);break;
+                case 1:theClass.setBackgroundResource(R.drawable.course_bk_2_ripple);break;
+                case 2:theClass.setBackgroundResource(R.drawable.course_bk_3_ripple);break;
+                case 3:theClass.setBackgroundResource(R.drawable.course_bk_4_ripple);break;
+            }
             //如果非本周
             if(wMIN>mViewModel.week||wMax<mViewModel.week){
                 val+="[非本周]";
                 //设置为灰色
-                theClass.setBackgroundColor(0xcccccccc);
+                theClass.setBackgroundResource(R.drawable.course_bk_noweek_ripple);
             }
             //拼接信息
             val+=course.getName();
@@ -140,7 +147,7 @@ public class CourseFragment extends Fragment {
             //应用设置
             theClass.setLayoutParams(params);
             //设置字体大小和颜色
-            theClass.setTextSize(11);
+            theClass.setTextSize(12);
             theClass.setTextColor(Color.WHITE);
             //结尾设置省略号
             theClass.setEllipsize(TextUtils.TruncateAt.END);
