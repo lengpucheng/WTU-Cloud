@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.hll520.wtu.cloud.R;
@@ -83,7 +84,7 @@ public class CourseFragment extends Fragment {
         //监听课表
         mViewModel.getWhoCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
-            public void onChanged(List<Course> courses) {
+            public void onChanged(final List<Course> courses) {
                 //缓存
                 courses_temp=courses;
                 //如果课程过时提示导入课程
@@ -166,7 +167,10 @@ public class CourseFragment extends Fragment {
                 .setNegativeButton("编辑", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("UID",1001);
+                        bundle.putSerializable("COURSE",course);
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment,bundle);
                     }
                 }).setNeutralButton("删除", new DialogInterface.OnClickListener() {
                     @Override

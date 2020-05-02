@@ -36,7 +36,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/course_hint_room"
+                    android:id="@+id/course_edit_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -52,16 +52,16 @@
                     app:layout_constraintVertical_bias="0.03" />
 
                 <Spinner
-                    android:id="@+id/couWeek"
+                    android:id="@+id/course_edit_week"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:background="@android:drawable/editbox_background_normal"
                     android:entries="@array/week"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/course_hint_room"
-                    app:layout_constraintStart_toStartOf="@+id/course_hint_room"
-                    app:layout_constraintTop_toBottomOf="@+id/course_hint_room"
+                    app:layout_constraintEnd_toEndOf="@+id/course_edit_room"
+                    app:layout_constraintStart_toStartOf="@+id/course_edit_room"
+                    app:layout_constraintTop_toBottomOf="@+id/course_edit_room"
                     app:layout_constraintVertical_bias="0.03" />
 
                 <LinearLayout
@@ -72,9 +72,9 @@
                     android:background="@android:drawable/editbox_background_normal"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/couWeek"
-                    app:layout_constraintStart_toStartOf="@+id/couWeek"
-                    app:layout_constraintTop_toBottomOf="@+id/couWeek"
+                    app:layout_constraintEnd_toEndOf="@+id/course_edit_week"
+                    app:layout_constraintStart_toStartOf="@+id/course_edit_week"
+                    app:layout_constraintTop_toBottomOf="@+id/course_edit_week"
                     app:layout_constraintVertical_bias="0.03">
 
                     <TextView
@@ -194,7 +194,7 @@
                     android:autofillHints="" />
 
                 <Button
-                    android:id="@+id/couOk"
+                    android:id="@+id/course_edit_Ok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
