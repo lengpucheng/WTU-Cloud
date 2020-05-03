@@ -72,4 +72,6 @@ dependencies {
         // Test helpers
         testImplementation "androidx.room:room-testing:$room_version"
     }
+    //脚本
+    implementation 'io.apisense:rhino-android:1.0'
 }
