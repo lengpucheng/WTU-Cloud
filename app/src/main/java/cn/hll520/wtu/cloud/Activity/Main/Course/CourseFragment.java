@@ -9,7 +9,7 @@ import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +34,7 @@ import androidx.navigation.Navigation;
 import java.util.List;
 
 import cn.hll520.wtu.cloud.R;
+import cn.hll520.wtu.cloud.cloud.CloudCourse;
 import cn.hll520.wtu.cloud.databinding.CourseFragmentBinding;
 import cn.hll520.wtu.cloud.model.Course;
 import cn.hll520.wtu.cloud.model.UNCourse;
@@ -298,10 +299,15 @@ public class CourseFragment extends Fragment {
     private void upload() {
         CreateUNCourse unCourse=new CreateUNCourse(courses_temp,user_temp.getUID());
         List<UNCourse> courses=unCourse.getUnCourses();
-        if(mViewModel.upload(courses))
-            Toast.makeText(requireContext(), "上传成功！", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(requireContext(), "上传失败！", Toast.LENGTH_SHORT).show();
+        mViewModel.upload(courses).observe(getViewLifecycleOwner(), new Observer<CloudCourse.Result>() {
+            @Override
+            public void onChanged(CloudCourse.Result result) {
+                if(result.isOK)
+                    Toast.makeText(requireContext(), "上传成功！", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(requireContext(), "上传失败！"+result.MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
-import android.os.AsyncTask;
+
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -92,7 +92,7 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     //上传课表
-    boolean upload(List<UNCourse> unCourses){ return new CloudCourse().upload(unCourses); }
+    LiveData<CloudCourse.Result> upload(List<UNCourse> unCourses){ return new CloudCourse().upload(unCourses); }
 
 
     //获取星期几的日期

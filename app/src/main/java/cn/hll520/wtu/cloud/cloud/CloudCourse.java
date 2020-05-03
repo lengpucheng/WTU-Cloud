@@ -2,7 +2,10 @@ package cn.hll520.wtu.cloud.cloud;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-import android.util.Log;
+
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -10,15 +13,17 @@ import cn.hll520.wtu.cloud.link.DataLinkCourse;
 import cn.hll520.wtu.cloud.model.UNCourse;
 
 public class CloudCourse {
-    private String MSG="";
-    private boolean flag;
-    public CloudCourse(){};
+    public static class Result{
+        public boolean isOK=false;
+        public String MSG="";
+    }
+    //结果
+    private MutableLiveData<Result> _restult=new MutableLiveData<>();
+
+    public CloudCourse(){}
 
     //上传课表
-    public boolean upload(List<UNCourse> courses){new UPLoadCourse(courses).execute();return flag;}
-
-    //获取错误信息
-    public String getMSG(){return MSG;}
+    public LiveData<Result> upload(List<UNCourse> courses){new UPLoadCourse(courses).execute();return _restult;}
 
 
     /*
@@ -32,8 +37,10 @@ public class CloudCourse {
         @Override
         protected Void doInBackground(Void... Void) {
             DataLinkCourse link=new DataLinkCourse();
-            flag = link.uploadCourse(list);
-            MSG=link.getMSG();
+            Result result= new Result();
+            result.isOK= link.uploadCourse(list);
+            result.MSG=link.getMSG();
+            _restult.postValue(result);
             return null;
         }
     }

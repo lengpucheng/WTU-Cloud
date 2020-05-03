@@ -40,11 +40,19 @@ public class DataLinkCourse {
             MSG="网络异常";
             return false;
         }
-        String SQL ="INSERT INTO course_null(UID, SID, NAME, WEEK, AM1_2, AM3_5, PM1_2, PM3_4, NIGHT) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String SQL;
         try {
-            for(UNCourse unCourse:unCourses){
+            //删除其全部课表
+            SQL="DELETE FROM course_null WHERE UID=?";
             PreparedStatement pres = LINK.getConnection().prepareStatement(SQL);
+            pres.setInt(1,unCourses.get(0).getUID());
+            pres.execute();
+
+            SQL ="INSERT INTO course_null(UID, SID, NAME, WEEK, AM1_2, AM3_5, PM1_2, PM3_4, NIGHT) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            //写入数据
+            for(UNCourse unCourse:unCourses){
+            pres = LINK.getConnection().prepareStatement(SQL);
             pres.setInt(1,unCourse.getUID());
             pres.setString(2,unCourse.getSID());
             pres.setString(3,unCourse.getName());
