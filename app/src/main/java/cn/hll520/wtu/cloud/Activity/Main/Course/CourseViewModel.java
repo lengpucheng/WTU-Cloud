@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,9 @@ import androidx.lifecycle.LiveData;
 import java.util.Date;
 import java.util.List;
 
+import cn.hll520.wtu.cloud.cloud.CloudCourse;
 import cn.hll520.wtu.cloud.model.Course;
+import cn.hll520.wtu.cloud.model.UNCourse;
 import cn.hll520.wtu.cloud.model.User;
 import cn.hll520.wtu.cloud.repository.CourseRepository;
 import cn.hll520.wtu.cloud.repository.UserRepository;
@@ -88,6 +91,8 @@ public class CourseViewModel extends AndroidViewModel {
         return (i - 1) * avg_width;
     }
 
+    //上传课表
+    boolean upload(List<UNCourse> unCourses){ return new CloudCourse().upload(unCourses); }
 
 
     //获取星期几的日期
@@ -109,5 +114,4 @@ public class CourseViewModel extends AndroidViewModel {
         //返回当前日期
         return formatter.format(date);
     }
-
 }

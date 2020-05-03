@@ -9,6 +9,7 @@ import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,9 @@ import java.util.List;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.databinding.CourseFragmentBinding;
 import cn.hll520.wtu.cloud.model.Course;
+import cn.hll520.wtu.cloud.model.UNCourse;
 import cn.hll520.wtu.cloud.model.User;
+import cn.hll520.wtu.cloud.util.CreateUNCourse;
 
 public class CourseFragment extends Fragment {
 
@@ -282,7 +285,7 @@ public class CourseFragment extends Fragment {
                         setWeek();
                         break;
                     case R.id.course_menu_uploda:
-
+                        upload();
                         break;
                 }
                 return false;
@@ -291,6 +294,18 @@ public class CourseFragment extends Fragment {
         popupMenu.show();
     }
 
+    //上传课表
+    private void upload() {
+        CreateUNCourse unCourse=new CreateUNCourse(courses_temp,user_temp.getUID());
+        List<UNCourse> courses=unCourse.getUnCourses();
+        if(mViewModel.upload(courses))
+            Toast.makeText(requireContext(), "上传成功！", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(requireContext(), "上传失败！", Toast.LENGTH_SHORT).show();
+    }
+
+
+    //设置周数
     private void setWeek() {
         final Spinner spinner = new Spinner(requireContext());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item);

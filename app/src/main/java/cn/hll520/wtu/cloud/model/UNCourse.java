@@ -2,7 +2,11 @@ package cn.hll520.wtu.cloud.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(tableName ="COURSE_NULL")
 public class UNCourse {
@@ -28,6 +32,9 @@ public class UNCourse {
     private String night="0-0";//晚上
 
     public UNCourse(){}
+
+    @Ignore
+    public UNCourse(int week,int UID){this.week=week;this.UID=UID;}
 
     public int get_id() {
         return _id;
@@ -108,4 +115,69 @@ public class UNCourse {
     public void setNight(String night) {
         this.night = night;
     }
+
+    @Override
+    public String toString() {
+        return "UNCourse{" +
+                "_id=" + _id +
+                ", UID=" + UID +
+                ", SID='" + SID + '\'' +
+                ", name='" + name + '\'' +
+                ", week=" + week +
+                ", am1_2='" + am1_2 + '\'' +
+                ", am3_5='" + am3_5 + '\'' +
+                ", pm1_2='" + pm1_2 + '\'' +
+                ", pm3_4='" + pm3_4 + '\'' +
+                ", night='" + night + '\'' +
+                '}';
+    }
+
+    /*
+    * ————————————————————————其他方法——————————————————————————
+    * */
+
+    //初始化
+    @Ignore
+    public static List<UNCourse> getDeft(int uid){
+        List<UNCourse> unCourses=new ArrayList<>();
+        unCourses.add(new UNCourse(1,uid));
+        unCourses.add(new UNCourse(2,uid));
+        unCourses.add(new UNCourse(3,uid));
+        unCourses.add(new UNCourse(4,uid));
+        unCourses.add(new UNCourse(5,uid));
+        unCourses.add(new UNCourse(6,uid));
+        unCourses.add(new UNCourse(7,uid));
+        return unCourses;
+    }
+
+    //解析
+    @Ignore
+    public int[] getMax_Min(int i){
+        int[] Max_Min={0,0};
+        switch (i){
+            case 0:
+                String[] am1=getAm1_2().split("-");
+                Max_Min=new int[]{Integer.parseInt(am1[0]), Integer.parseInt(am1[1])};
+                break;
+            case 1:
+                String[] am2=getAm3_5().split("-");
+                Max_Min=new int[]{Integer.parseInt(am2[0]), Integer.parseInt(am2[1])};
+                break;
+            case 2:
+                String[] pm1=getPm1_2().split("-");
+                Max_Min=new int[]{Integer.parseInt(pm1[0]), Integer.parseInt(pm1[1])};
+                break;
+            case 3:
+                String[] pm2=getPm3_4().split("-");
+                Max_Min=new int[]{Integer.parseInt(pm2[0]), Integer.parseInt(pm2[1])};
+                break;
+            case 4:
+                String[] ni=getNight().split("-");
+                Max_Min=new int[]{Integer.parseInt(ni[0]), Integer.parseInt(ni[1])};
+                break;
+        }
+        return Max_Min;
+    }
+
+
 }
