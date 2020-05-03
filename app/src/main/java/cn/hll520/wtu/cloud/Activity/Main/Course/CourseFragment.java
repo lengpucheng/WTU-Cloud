@@ -82,7 +82,7 @@ public class CourseFragment extends Fragment {
             }
         });
         //监听课表
-        mViewModel.getWhoCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+        mViewModel.getWhoCourse(1001).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(final List<Course> courses) {
                 //缓存
@@ -251,7 +251,9 @@ public class CourseFragment extends Fragment {
                         break;
                     case R.id.course_menu_add:
                         //设置动作
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("UID",1001);
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment,bundle);
                         break;
                     case  R.id.course_menu_setweek:
                         setWeek();

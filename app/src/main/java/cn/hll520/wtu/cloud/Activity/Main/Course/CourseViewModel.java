@@ -1,5 +1,6 @@
 package cn.hll520.wtu.cloud.Activity.Main.Course;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,11 +9,13 @@ import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.Date;
 import java.util.List;
@@ -68,15 +71,13 @@ public class CourseViewModel extends AndroidViewModel {
         }
     }
 
+
     //获取编辑shp对象
     SharedPreferences getPreferences(){return preferences;}
     //获取全部课程
-    LiveData<List<Course>> getWhoCourse(){return courseRepository.getWhoCourse(1001);}
-
+    LiveData<List<Course>> getWhoCourse(int UID){return courseRepository.getWhoCourse(UID);}
     //删除课程
     void delCourse(Course course){courseRepository.delCourse(course);}
-
-
     //获取当前的边距
     int getLeft(int i){return (i-1)*avg_width;}
 
@@ -100,8 +101,5 @@ public class CourseViewModel extends AndroidViewModel {
         //返回当前日期
         return formatter.format(date);
     }
-
-
-
 
 }

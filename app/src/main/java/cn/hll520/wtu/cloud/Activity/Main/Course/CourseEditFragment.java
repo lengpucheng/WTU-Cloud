@@ -53,6 +53,8 @@ public class CourseEditFragment extends Fragment {
             binding.courseEditWmax.setText(String.valueOf(mViewModel.getCourse().getWmax()));
             binding.courseEditTeacher.setText(mViewModel.getCourse().getTeacher());
             binding.courseEditTest.setText(mViewModel.getCourse().getTest());
+        }else {
+            mViewModel.setCourse(new Course());
         }
         //点击确定
         binding.courseEditOk.setOnClickListener(new View.OnClickListener() {
