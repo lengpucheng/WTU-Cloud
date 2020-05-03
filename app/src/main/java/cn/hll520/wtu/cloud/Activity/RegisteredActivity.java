@@ -164,7 +164,7 @@ public class RegisteredActivity extends AppCompatActivity {
             binding.regUname.setError("用户名不能为空");
             return false;
         }
-        if(!userName.matches("[0-9]+")){
+        if(userName.matches("[0-9]+")){
             binding.regUname.setError("用户名不能为纯数字");
             return false;
         }
