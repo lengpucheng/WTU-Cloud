@@ -11,6 +11,8 @@ import cn.hll520.wtu.cloud.db.UserDatabase;
 import cn.hll520.wtu.cloud.model.User;
 import cn.hll520.wtu.cloud.model.dao.UserDao;
 
+
+
 public class UserRepository {
     private UserDao userDao;
 
@@ -21,7 +23,9 @@ public class UserRepository {
     }
 
 
-
+    /**
+     *
+     */
     /*——————————————————————————封装的对外的使用接口——————————————————————————————
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
@@ -30,6 +34,7 @@ public class UserRepository {
 
     //获取根据登录状态
     public User getUser_login(){ return userDao.getUser_login(1); }
+    public LiveData<User> getLogin_User(){return userDao.getLoginUser();}
 
     //获取用户从UID
     public User getUser_UID(int UID){return userDao.getUser_UID(UID);}
@@ -40,8 +45,13 @@ public class UserRepository {
     //更新
     public void upUser(User... users){new UpdateAsyncTask(userDao).execute(users);}
 
-    //删除
+    /**
+     * 删除
+     * @param users 可以使用其删除指定的USER
+     */
     public void delUser(User... users){new DeleteAsyncTask(userDao).execute(users);}
+
+
 
 
 

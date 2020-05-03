@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData;
 
 
 import java.util.List;
-import java.util.Objects;
 
 import cn.hll520.wtu.cloud.model.Course;
 import cn.hll520.wtu.cloud.repository.CourseRepository;
@@ -50,7 +49,6 @@ public class CourseLoginViewModel extends AndroidViewModel {
     //启动
     @SuppressLint("StaticFieldLeak")
     class startJWXT extends AsyncTask<Void,Void,Void>{
-
         @Override
         protected Void doInBackground(Void... voids) {
             //如果获取验证码成功就显示
@@ -63,8 +61,6 @@ public class CourseLoginViewModel extends AndroidViewModel {
     //登录
     @SuppressLint("StaticFieldLeak")
     class loginJWXT extends AsyncTask<Void,Void,Void>{
-
-
         @Override
         protected Void doInBackground(Void... voids) {
             //获取当前登录用户UID

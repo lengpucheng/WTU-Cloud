@@ -30,12 +30,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import java.io.Serializable;
 import java.util.List;
 
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.databinding.CourseFragmentBinding;
 import cn.hll520.wtu.cloud.model.Course;
+import cn.hll520.wtu.cloud.model.User;
 
 public class CourseFragment extends Fragment {
 
@@ -44,12 +44,14 @@ public class CourseFragment extends Fragment {
     private ImageView menuBar;
     private NavController controller;
     private List<Course> courses_temp;
+    private User user_temp = new User();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         //获取视图
-        View view=inflater.inflate(R.layout.course_fragment, container, false);
-        binding=CourseFragmentBinding.bind(view);//绑定
+        View view = inflater.inflate(R.layout.course_fragment, container, false);
+        binding = CourseFragmentBinding.bind(view);//绑定
         return binding.getRoot();
     }
 
@@ -60,12 +62,22 @@ public class CourseFragment extends Fragment {
         //获取导航控制器，参数为当前页面
         controller = Navigation.findNavController(requireView());
         mViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-        TextView Tile=requireActivity().findViewById(R.id.MainTile);
+        TextView Tile = requireActivity().findViewById(R.id.MainTile);
         Tile.setText("课表");
         //初始化当前时间
         intiDate();
+        //获取用户
+        mViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                user_temp = user;
+                //监听课表
+                observeCourse(user.getUID());
+            }
+        });
+
         //添加菜单
-        menuBar =requireActivity().findViewById(R.id.mainAdd);
+        menuBar = requireActivity().findViewById(R.id.mainAdd);
         //点击显示菜单
         menuBar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -81,15 +93,18 @@ public class CourseFragment extends Fragment {
                 setWeek();
             }
         });
-        //监听课表
-        mViewModel.getWhoCourse(1001).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+
+    }
+
+    private void observeCourse(int uid) {
+        mViewModel.getWhoCourse(uid).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(final List<Course> courses) {
                 //缓存
-                courses_temp=courses;
+                courses_temp = courses;
                 //如果课程过时提示导入课程
-                if(courses.size()<2){
-                    AlertDialog.Builder builder=new AlertDialog.Builder(requireContext()).setTitle("提示")
+                if (courses.size() < 2) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(requireContext()).setTitle("提示")
                             .setIcon(R.mipmap.ic_launcher).setMessage("当前课程较少，请导入或手动添加课程")
                             .setPositiveButton("导入课程", new DialogInterface.OnClickListener() {
                                 @Override
@@ -97,7 +112,7 @@ public class CourseFragment extends Fragment {
                                     controller.navigate(R.id.action_courseFragment_to_courseLoginFragment);
                                 }
                             })
-                            .setNegativeButton("知道了",null);
+                            .setNegativeButton("知道了", null);
                     builder.show();
                 }
                 showCourse(courses);
@@ -110,39 +125,47 @@ public class CourseFragment extends Fragment {
         //移除原有全部
         binding.courseClass.removeAllViews();
         showNowDay();
-        for(final Course course:courses){
+        for (final Course course : courses) {
             //新建一个文本用来显示课程
-            TextView theClass=new TextView(requireContext());
+            TextView theClass = new TextView(requireContext());
             //文本内的字符串
-            String val="";
+            String val = "";
             //获取当前课的周期
-            int wMIN=course.getWmin();
-            int wMax=course.getWmax();
+            int wMIN = course.getWmin();
+            int wMax = course.getWmax();
             //设置不同颜色
-            switch ((course.getWeek()+course.getTmin())%4){
-                case 0:theClass.setBackgroundResource(R.drawable.course_bk_1_ripple);break;
-                case 1:theClass.setBackgroundResource(R.drawable.course_bk_2_ripple);break;
-                case 2:theClass.setBackgroundResource(R.drawable.course_bk_3_ripple);break;
-                case 3:theClass.setBackgroundResource(R.drawable.course_bk_4_ripple);break;
+            switch ((course.getWeek() + course.getTmin()) % 4) {
+                case 0:
+                    theClass.setBackgroundResource(R.drawable.course_bk_1_ripple);
+                    break;
+                case 1:
+                    theClass.setBackgroundResource(R.drawable.course_bk_2_ripple);
+                    break;
+                case 2:
+                    theClass.setBackgroundResource(R.drawable.course_bk_3_ripple);
+                    break;
+                case 3:
+                    theClass.setBackgroundResource(R.drawable.course_bk_4_ripple);
+                    break;
             }
             //如果非本周
-            if(wMIN>mViewModel.week||wMax<mViewModel.week){
-                val+="[非本周]";
+            if (wMIN > mViewModel.week || wMax < mViewModel.week) {
+                val += "[非本周]";
                 //设置为灰色
                 theClass.setBackgroundResource(R.drawable.course_bk_noweek_ripple);
             }
             //拼接信息
-            val+=course.getName();
-            val+="@"+course.getRoom();
-            val+="#"+course.getTeacher()+course.getJob();
-            val+="|"+course.getTest();
+            val += course.getName();
+            val += "@" + course.getRoom();
+            val += "#" + course.getTeacher() + course.getJob();
+            val += "|" + course.getTest();
             //横跨几节
-            int high=course.getTmax()-course.getTmin()+1;
+            int high = course.getTmax() - course.getTmin() + 1;
             //设置大小
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mViewModel.avg_width, dip2px(high * 65));
             //设置位置
             params.setMargins(mViewModel.getLeft(course.getWeek()),//设置左边距，即周几
-                    dip2px((course.getTmin()-1) * 65),//设置上边距，即第节开始
+                    dip2px((course.getTmin() - 1) * 65),//设置上边距，即第节开始
                     0, 0);
             //应用设置
             theClass.setLayoutParams(params);
@@ -168,16 +191,16 @@ public class CourseFragment extends Fragment {
 
     //显示详细信息
     private void showCourseInfo(final Course course) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(requireContext()).setTitle(course.getName())
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext()).setTitle(course.getName())
                 .setMessage(course.showInfo())
-                .setPositiveButton("知道了",null)
+                .setPositiveButton("知道了", null)
                 .setNegativeButton("编辑", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Bundle bundle=new Bundle();
-                        bundle.putInt("UID",1001);
-                        bundle.putSerializable("COURSE",course);
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment,bundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("UID", user_temp.getUID());
+                        bundle.putSerializable("COURSE", course);
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment, bundle);
                     }
                 }).setNeutralButton("删除", new DialogInterface.OnClickListener() {
                     @Override
@@ -210,15 +233,15 @@ public class CourseFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void intiDate() {
         //显示周数
-        binding.courseWeekNums.setText(mViewModel.week +"周");
+        binding.courseWeekNums.setText(mViewModel.week + "周");
         //显示日期
-        binding.courseWeek1.append("\n"+mViewModel.getDate(1));
-        binding.courseWeek2.append("\n"+mViewModel.getDate(2));
-        binding.courseWeek3.append("\n"+mViewModel.getDate(3));
-        binding.courseWeek4.append("\n"+mViewModel.getDate(4));
-        binding.courseWeek5.append("\n"+mViewModel.getDate(5));
-        binding.courseWeek6.append("\n"+mViewModel.getDate(6));
-        binding.courseWeek7.append("\n"+mViewModel.getDate(7));
+        binding.courseWeek1.append("\n" + mViewModel.getDate(1));
+        binding.courseWeek2.append("\n" + mViewModel.getDate(2));
+        binding.courseWeek3.append("\n" + mViewModel.getDate(3));
+        binding.courseWeek4.append("\n" + mViewModel.getDate(4));
+        binding.courseWeek5.append("\n" + mViewModel.getDate(5));
+        binding.courseWeek6.append("\n" + mViewModel.getDate(6));
+        binding.courseWeek7.append("\n" + mViewModel.getDate(7));
     }
 
     private void showNowDay() {
@@ -239,23 +262,23 @@ public class CourseFragment extends Fragment {
 
     //显示菜单
     private void showMenu(final View view) {
-        PopupMenu popupMenu=new PopupMenu(getContext(),view);
-        popupMenu.getMenuInflater().inflate(R.menu.course_menu,popupMenu.getMenu());
+        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        popupMenu.getMenuInflater().inflate(R.menu.course_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.course_menu_impro:
                         //设置动作
                         controller.navigate(R.id.action_courseFragment_to_courseLoginFragment);
                         break;
                     case R.id.course_menu_add:
                         //设置动作
-                        Bundle bundle=new Bundle();
-                        bundle.putInt("UID",1001);
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment,bundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("UID", user_temp.getUID());
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment, bundle);
                         break;
-                    case  R.id.course_menu_setweek:
+                    case R.id.course_menu_setweek:
                         setWeek();
                         break;
                     case R.id.course_menu_uploda:
@@ -272,8 +295,7 @@ public class CourseFragment extends Fragment {
         final Spinner spinner = new Spinner(requireContext());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item);
         // 添加到数组
-        for (int i = 1; i < 32; i++)
-        {
+        for (int i = 1; i < 32; i++) {
             dataAdapter.add("第" + i + "周");
         }
         //添加适配器
@@ -294,15 +316,10 @@ public class CourseFragment extends Fragment {
                 editor.putInt("day", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
                 editor.apply();
                 Toast.makeText(requireContext(), "设置成功", Toast.LENGTH_SHORT).show();
-                    showCourse(courses_temp);
-                binding.courseWeekNums.setText(week+"周");
+                showCourse(courses_temp);
+                binding.courseWeekNums.setText(week + "周");
             }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(requireContext(), "取消设置", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }).setNegativeButton("取消", null);
         builder.create().show();
     }
 

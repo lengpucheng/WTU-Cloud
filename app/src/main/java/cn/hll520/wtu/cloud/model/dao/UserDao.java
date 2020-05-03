@@ -30,4 +30,9 @@ public interface UserDao {
 
     @Query("SELECT * FROM USER_LOGIN WHERE UID=:UID")
     User getUser_UID(int UID);
+
+    //新获取登录用户
+    @Query("SELECT * FROM USER_LOGIN WHERE login=1")
+    LiveData<User> getLoginUser();
 }
+

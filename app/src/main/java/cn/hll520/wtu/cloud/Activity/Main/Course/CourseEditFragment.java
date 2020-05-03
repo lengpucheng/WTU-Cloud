@@ -1,7 +1,6 @@
 package cn.hll520.wtu.cloud.Activity.Main.Course;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -14,7 +13,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import cn.hll520.wtu.cloud.R;
@@ -43,7 +41,7 @@ public class CourseEditFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //如果是修改
         if(mViewModel.getCourse()!=null){
-            mViewModel.setUPData(true);
+            mViewModel.setUPData();
             binding.courseEditName.setText(mViewModel.getCourse().getName());
             binding.courseEditRoom.setText(mViewModel.getCourse().getRoom());
             binding.courseEditWeek.setSelection(mViewModel.getCourse().getWeek()-1,true);

@@ -24,13 +24,13 @@ public class CourseEditViewModel extends AndroidViewModel {
     //获取对象
     Course getCourse(){return course;}
     //设置是否是更改
-    void setUPData(boolean isUPData){this.isUPData=isUPData;UID=course.getWho();}
+    void setUPData(){this.isUPData= true;UID=course.getWho();}
 
     //添加
-    void addCourse(Course course){courseRepository.addCourse(course);}
+    private void addCourse(Course course){courseRepository.addCourse(course);}
 
     //更新
-    void updataCourse(Course course){courseRepository.updataCourse(course);}
+    private void updataCourse(Course course){courseRepository.updataCourse(course);}
 
     //保存
     void saveCourse(){
