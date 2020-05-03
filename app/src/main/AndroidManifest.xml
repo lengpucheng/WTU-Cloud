@@ -24,7 +24,7 @@
         <activity android:name=".Activity.Main.MycenterActivity" />
         <activity android:name=".Activity.PeoInfoActivity" />
         <activity android:name=".Activity.Login.LoginActivity" />
-        <activity android:name=".Activity.Main.MainActivity" />
+        <activity android:name=".Activity.MainActivity" />
     </application>
 
 </manifest>

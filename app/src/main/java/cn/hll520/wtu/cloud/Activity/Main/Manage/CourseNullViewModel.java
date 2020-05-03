@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.Main.Course;
+package cn.hll520.wtu.cloud.Activity.Main.Manage;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,44 +6,25 @@ import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
-
 import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.Date;
-import java.util.List;
 
-import cn.hll520.wtu.cloud.cloud.CloudCourse;
-import cn.hll520.wtu.cloud.model.Course;
-import cn.hll520.wtu.cloud.model.UNCourse;
-import cn.hll520.wtu.cloud.model.User;
-import cn.hll520.wtu.cloud.repository.CourseRepository;
-import cn.hll520.wtu.cloud.repository.UserRepository;
-
-//安卓ViewModel可以自动管理生命周期
-public class CourseViewModel extends AndroidViewModel {
-
-//    int year;//年
-//    int month;//月
+public class CourseNullViewModel extends AndroidViewModel {
     int week;//周
     int weekDay;//星期
     int avg_width;//屏幕平均宽度
-    private UserRepository userRepository;
-    private CourseRepository courseRepository;
     private SharedPreferences preferences;
     private static final String SHP_COURSE = "Course";//shp文件名
 
-
-    //构造函数
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public CourseViewModel(@NonNull Application application) {
+    public CourseNullViewModel(@NonNull Application application) {
         super(application);
-        userRepository = new UserRepository(application);
-        courseRepository = new CourseRepository(application);
         //设置一个文件保存用户偏好————设置的周数
         preferences = application.getSharedPreferences(SHP_COURSE, Context.MODE_PRIVATE);
         //获取屏幕宽度，平均为8
@@ -68,31 +49,14 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
 
-    //获取登录用户
-    LiveData<User> getUser(){return userRepository.getLogin_User();}
-
     //获取编辑shp对象
     SharedPreferences getPreferences() {
         return preferences;
     }
-
-    //获取全部课程
-    LiveData<List<Course>> getWhoCourse(int UID) {
-        return courseRepository.getWhoCourse(UID);
-    }
-
-    //删除课程
-    void delCourse(Course course) {
-        courseRepository.delCourse(course);
-    }
-
     //获取当前的边距
     int getLeft(int i) {
         return (i - 1) * avg_width;
     }
-
-    //上传课表
-    LiveData<CloudCourse.ResultLoad> upload(List<UNCourse> unCourses){ return new CloudCourse().upload(unCourses); }
 
 
     //获取星期几的日期

@@ -44,4 +44,17 @@
             android:id="@+id/action_courseEditFragment_to_courseFragment"
             app:destination="@id/courseFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/manageFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.ManageFragment"
+        android:label="manage_fragment"
+        tools:layout="@layout/manage_fragment" >
+        <action
+            android:id="@+id/action_manageFragment_to_courseNullFragment"
+            app:destination="@id/courseNullFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseNullFragment"
+        android:name="cn.hll520.wtu.cloud.Activity.Main.Manage.CourseNullFragment"
+        android:label="CourseNullFragment" />
 </navigation>

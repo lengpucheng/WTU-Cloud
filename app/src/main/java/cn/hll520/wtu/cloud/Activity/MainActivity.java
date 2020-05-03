@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.Main;
+package cn.hll520.wtu.cloud.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import cn.hll520.wtu.cloud.Activity.Main.MycenterActivity;
 import cn.hll520.wtu.cloud.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,MycenterActivity.class);
+                Intent intent=new Intent(MainActivity.this, MycenterActivity.class);
                 startActivity(intent);
             }
         });

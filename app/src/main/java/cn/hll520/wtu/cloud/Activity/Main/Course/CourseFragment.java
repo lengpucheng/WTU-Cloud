@@ -299,13 +299,13 @@ public class CourseFragment extends Fragment {
     private void upload() {
         CreateUNCourse unCourse=new CreateUNCourse(courses_temp,user_temp.getUID());
         List<UNCourse> courses=unCourse.getUnCourses();
-        mViewModel.upload(courses).observe(getViewLifecycleOwner(), new Observer<CloudCourse.Result>() {
+        mViewModel.upload(courses).observe(getViewLifecycleOwner(), new Observer<CloudCourse.ResultLoad>() {
             @Override
-            public void onChanged(CloudCourse.Result result) {
-                if(result.isOK)
+            public void onChanged(CloudCourse.ResultLoad resultLoad) {
+                if(resultLoad.isOK)
                     Toast.makeText(requireContext(), "上传成功！", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(requireContext(), "上传失败！"+result.MSG, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "上传失败！"+ resultLoad.MSG, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import cn.hll520.wtu.cloud.Activity.Login.LoginActivity;
-import cn.hll520.wtu.cloud.Activity.Main.MainActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.model.User;
 import cn.hll520.wtu.cloud.repository.UserRepository;

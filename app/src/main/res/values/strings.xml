@@ -112,6 +112,12 @@
     <string name="time_15">15</string>
     <string name="time_16">16</string>
     <string name="setWeek">设置周数</string>
+    <string name="manage">管理</string>
+    <string name="time_am_1_2">上午1—2节</string>
+    <string name="time_am_3_5">上午\n3-5节</string>
+    <string name="time_pm_1_2">下午\n1-2节</string>
+    <string name="time_pm_3_4">下午\n3-4节</string>
+    <string name="time_nigth">晚上\n课程</string>
 
 
     <string-array name="gender">

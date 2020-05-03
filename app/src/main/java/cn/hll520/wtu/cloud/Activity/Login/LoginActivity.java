@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import cn.hll520.wtu.cloud.Activity.Main.MainActivity;
+import cn.hll520.wtu.cloud.Activity.MainActivity;
 import cn.hll520.wtu.cloud.Activity.RegisteredActivity;
 import cn.hll520.wtu.cloud.Activity.updataPassActivity;
 import cn.hll520.wtu.cloud.R;

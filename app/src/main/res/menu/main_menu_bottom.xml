@@ -10,6 +10,10 @@
         android:icon="@drawable/ic_account_box_black_24dp"
         android:title="@string/people" />
     <item
+        android:id="@+id/manageFragment"
+        android:icon="@drawable/ic_work_black_24dp"
+        android:title="@string/manage" />
+    <item
         android:id="@+id/courseFragment"
         android:icon="@drawable/ic_today_black_24dp"
         android:title="@string/menu_course" />
