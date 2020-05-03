@@ -11,9 +11,11 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
 
 import java.util.Date;
+
+import cn.hll520.wtu.cloud.cloud.CloudCourse;
 
 public class CourseNullViewModel extends AndroidViewModel {
     int week;//周
@@ -57,7 +59,8 @@ public class CourseNullViewModel extends AndroidViewModel {
     int getLeft(int i) {
         return (i - 1) * avg_width;
     }
-
+    //获取课表
+    LiveData<CloudCourse.ResultDown> getUNCourse(){return new CloudCourse().getUNCourse(1001); }
 
     //获取星期几的日期
     @RequiresApi(api = Build.VERSION_CODES.N)

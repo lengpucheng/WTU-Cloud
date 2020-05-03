@@ -109,7 +109,7 @@ public class CourseFragment extends Fragment {
                 //如果课程过时提示导入课程
                 if (courses.size() < 2) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(requireContext()).setTitle("提示")
-                            .setIcon(R.mipmap.ic_launcher).setMessage("当前课程较少，请导入或手动添加课程")
+                            .setIcon(R.mipmap.logo_r).setMessage("当前课程较少，请导入或手动添加课程")
                             .setPositiveButton("导入课程", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

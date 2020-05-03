@@ -74,4 +74,5 @@ dependencies {
     }
     //脚本
     implementation 'io.apisense:rhino-android:1.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 }
