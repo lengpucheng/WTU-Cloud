@@ -30,6 +30,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.hll520.wtu.cloud.R;
@@ -81,9 +82,9 @@ public class CourseFragment extends Fragment {
             }
         });
         //监听课表
-        mViewModel.getWhoCourse().observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+        mViewModel.getWhoCourse(1001).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
-            public void onChanged(List<Course> courses) {
+            public void onChanged(final List<Course> courses) {
                 //缓存
                 courses_temp=courses;
                 //如果课程过时提示导入课程
@@ -117,11 +118,18 @@ public class CourseFragment extends Fragment {
             //获取当前课的周期
             int wMIN=course.getWmin();
             int wMax=course.getWmax();
+            //设置不同颜色
+            switch ((course.getWeek()+course.getTmin())%4){
+                case 0:theClass.setBackgroundResource(R.drawable.course_bk_1_ripple);break;
+                case 1:theClass.setBackgroundResource(R.drawable.course_bk_2_ripple);break;
+                case 2:theClass.setBackgroundResource(R.drawable.course_bk_3_ripple);break;
+                case 3:theClass.setBackgroundResource(R.drawable.course_bk_4_ripple);break;
+            }
             //如果非本周
             if(wMIN>mViewModel.week||wMax<mViewModel.week){
                 val+="[非本周]";
                 //设置为灰色
-                theClass.setBackgroundColor(0xcccccccc);
+                theClass.setBackgroundResource(R.drawable.course_bk_noweek_ripple);
             }
             //拼接信息
             val+=course.getName();
@@ -139,7 +147,7 @@ public class CourseFragment extends Fragment {
             //应用设置
             theClass.setLayoutParams(params);
             //设置字体大小和颜色
-            theClass.setTextSize(11);
+            theClass.setTextSize(12);
             theClass.setTextColor(Color.WHITE);
             //结尾设置省略号
             theClass.setEllipsize(TextUtils.TruncateAt.END);
@@ -166,7 +174,10 @@ public class CourseFragment extends Fragment {
                 .setNegativeButton("编辑", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("UID",1001);
+                        bundle.putSerializable("COURSE",course);
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment,bundle);
                     }
                 }).setNeutralButton("删除", new DialogInterface.OnClickListener() {
                     @Override
@@ -240,7 +251,9 @@ public class CourseFragment extends Fragment {
                         break;
                     case R.id.course_menu_add:
                         //设置动作
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("UID",1001);
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment,bundle);
                         break;
                     case  R.id.course_menu_setweek:
                         setWeek();
