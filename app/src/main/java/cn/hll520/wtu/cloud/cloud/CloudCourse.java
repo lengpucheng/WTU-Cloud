@@ -26,20 +26,33 @@ public class CloudCourse {
     }
 
     //上传结果
-    private MutableLiveData<ResultLoad> _restultLoad=new MutableLiveData<>();
+    private MutableLiveData<ResultLoad> _resultLoad =new MutableLiveData<>();
     //下载结果
-    private MutableLiveData<ResultDown> _restultDown=new MutableLiveData<>();
+    private MutableLiveData<ResultDown> _resultDown =new MutableLiveData<>();
 
     public CloudCourse(){}
 
-    //上传课表
-    public LiveData<ResultLoad> upload(List<UNCourse> courses){new UPLoadCourse(courses).execute();return _restultLoad;}
-
-    //下载课表
-    public LiveData<ResultDown> getUNCourse(int OID){new DownCourse(OID).execute();return _restultDown;}
 
     /*
-    * ——————————————————————————封装好的接口——————————————————————
+     * ——————————————————————————获取结果——————————————————————
+     * */
+   public LiveData<ResultLoad> getResultLoad(){return _resultLoad;}
+   public LiveData<ResultDown> getResultDown(){return _resultDown;}
+
+
+    /*
+     * ——————————————————————————对外的方法——————————————————————
+     * */
+
+
+    //上传课表
+    public void uploadUNCourse(List<UNCourse> courses){new UPLoadCourse(courses).execute();}
+
+    //下载课表
+    public void downUNCourse(int OID){new DownCourse(OID).execute();}
+
+    /*
+    * ——————————————————————————封装好的实现——————————————————————
     * */
     //上传
     @SuppressLint("StaticFieldLeak")
@@ -53,7 +66,7 @@ public class CloudCourse {
             ResultLoad resultLoad = new ResultLoad();
             resultLoad.isOK= link.uploadCourse(list);
             resultLoad.MSG=link.getMSG();
-            _restultLoad.postValue(resultLoad);
+            _resultLoad.postValue(resultLoad);
             return null;
         }
     }
@@ -71,7 +84,7 @@ public class CloudCourse {
             resultDown.isOk=unCourses!=null;
             resultDown.UNCourses=unCourses;
             resultDown.MSG=link.getMSG();
-            _restultDown.postValue(resultDown);
+            _resultDown.postValue(resultDown);
             return null;
         }
     }

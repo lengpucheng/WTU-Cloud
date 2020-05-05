@@ -23,6 +23,7 @@ public class CourseNullViewModel extends AndroidViewModel {
     int avg_width;//屏幕平均宽度
     private SharedPreferences preferences;
     private static final String SHP_COURSE = "Course";//shp文件名
+    private CloudCourse cloud=new CloudCourse();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public CourseNullViewModel(@NonNull Application application) {
@@ -60,7 +61,8 @@ public class CourseNullViewModel extends AndroidViewModel {
         return (i - 1) * avg_width;
     }
     //获取课表
-    LiveData<CloudCourse.ResultDown> getUNCourse(){return new CloudCourse().getUNCourse(1001); }
+    LiveData<CloudCourse.ResultDown> getResult(){return cloud.getResultDown();}
+    void downUNCourse(){cloud.downUNCourse(1001); }
 
     //获取星期几的日期
     @RequiresApi(api = Build.VERSION_CODES.N)

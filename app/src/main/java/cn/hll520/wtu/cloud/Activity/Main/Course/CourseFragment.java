@@ -97,9 +97,55 @@ public class CourseFragment extends Fragment {
                 setWeek();
             }
         });
-
+        //添加观察
+        observe();
     }
 
+    //显示菜单
+    private void showMenu(final View view) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        popupMenu.getMenuInflater().inflate(R.menu.course_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.course_menu_impro:
+                        //设置动作
+                        controller.navigate(R.id.action_courseFragment_to_courseLoginFragment);
+                        break;
+                    case R.id.course_menu_add:
+                        //设置动作
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("UID", user_temp.getUID());
+                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment, bundle);
+                        break;
+                    case R.id.course_menu_setweek:
+                        setWeek();
+                        break;
+                    case R.id.course_menu_uploda:
+                        upload();
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+    //观察其他的
+    private void observe() {
+        mViewModel.getResultLoad().observe(getViewLifecycleOwner(), new Observer<CloudCourse.ResultLoad>() {
+            @Override
+            public void onChanged(CloudCourse.ResultLoad resultLoad) {
+                if(resultLoad.isOK)
+                    Toast.makeText(requireContext(), "上传成功！", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(requireContext(), "上传失败！"+ resultLoad.MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    //观察课表
     private void observeCourse(int uid) {
         mViewModel.getWhoCourse(uid).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
@@ -123,6 +169,12 @@ public class CourseFragment extends Fragment {
             }
         });
     }
+
+
+
+    /*
+    * ——————————————————————-内部方法——————————————————————
+    * */
 
     //显示课程
     private void showCourse(List<Course> courses) {
@@ -264,50 +316,13 @@ public class CourseFragment extends Fragment {
     }
 
 
-    //显示菜单
-    private void showMenu(final View view) {
-        PopupMenu popupMenu = new PopupMenu(getContext(), view);
-        popupMenu.getMenuInflater().inflate(R.menu.course_menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.course_menu_impro:
-                        //设置动作
-                        controller.navigate(R.id.action_courseFragment_to_courseLoginFragment);
-                        break;
-                    case R.id.course_menu_add:
-                        //设置动作
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("UID", user_temp.getUID());
-                        controller.navigate(R.id.action_courseFragment_to_courseEditFragment, bundle);
-                        break;
-                    case R.id.course_menu_setweek:
-                        setWeek();
-                        break;
-                    case R.id.course_menu_uploda:
-                        upload();
-                        break;
-                }
-                return false;
-            }
-        });
-        popupMenu.show();
-    }
+
 
     //上传课表
     private void upload() {
         CreateUNCourse unCourse=new CreateUNCourse(courses_temp,user_temp.getUID());
         List<UNCourse> courses=unCourse.getUnCourses();
-        mViewModel.upload(courses).observe(getViewLifecycleOwner(), new Observer<CloudCourse.ResultLoad>() {
-            @Override
-            public void onChanged(CloudCourse.ResultLoad resultLoad) {
-                if(resultLoad.isOK)
-                    Toast.makeText(requireContext(), "上传成功！", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(requireContext(), "上传失败！"+ resultLoad.MSG, Toast.LENGTH_SHORT).show();
-            }
-        });
+        mViewModel.upload(courses);
     }
 
 

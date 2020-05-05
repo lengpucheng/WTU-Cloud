@@ -35,6 +35,7 @@ public class CourseViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private CourseRepository courseRepository;
     private SharedPreferences preferences;
+    private CloudCourse cloud=new CloudCourse();
     private static final String SHP_COURSE = "Course";//shp文件名
 
 
@@ -92,7 +93,10 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     //上传课表
-    LiveData<CloudCourse.ResultLoad> upload(List<UNCourse> unCourses){ return new CloudCourse().upload(unCourses); }
+    void upload(List<UNCourse> unCourses){ cloud.uploadUNCourse(unCourses); }
+
+    //获取结果
+    LiveData<CloudCourse.ResultLoad> getResultLoad(){return cloud.getResultLoad();}
 
 
     //获取星期几的日期

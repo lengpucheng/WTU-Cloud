@@ -1,43 +1,40 @@
 package cn.hll520.wtu.cloud.Activity.Main.Manage;
 
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudCourse;
-import cn.hll520.wtu.cloud.databinding.CourseFragmentBinding;
 import cn.hll520.wtu.cloud.databinding.CourseNullFragmentBinding;
-import cn.hll520.wtu.cloud.model.Course;
 import cn.hll520.wtu.cloud.model.UNCourse;
 
 public class CourseNullFragment extends Fragment {
 
     private CourseNullViewModel mViewModel;
     private CourseNullFragmentBinding binding;
-
-    public static CourseNullFragment newInstance() {
-        return new CourseNullFragment();
-    }
+    private List<UNCourse> unCourses_temp;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -55,22 +52,33 @@ public class CourseNullFragment extends Fragment {
         //初始化
         intiDate();
 
-        //获取空课表
-        mViewModel.getUNCourse().observe(getViewLifecycleOwner(), new Observer<CloudCourse.ResultDown>() {
+        //监听空课表
+        mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<CloudCourse.ResultDown>() {
             @Override
             public void onChanged(CloudCourse.ResultDown resultDown) {
                 if(!resultDown.isOk){
                     Toast.makeText(requireContext(), "获取空课表失败！"+resultDown.MSG, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //缓存课表
+                unCourses_temp=resultDown.UNCourses;
                 //显示空课表
                 showUNCourse(resultDown.UNCourses);
             }
         });
+        //获取空课表
+        mViewModel.downUNCourse();
 
+        binding.CourseNullSetWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setWeek();
+            }
+        });
 
     }
 
+    //显示课表
     private void showUNCourse(List<UNCourse> unCourses) {
         //生成课表占位符
         TextView[][] textViews = new TextView[7][5];
@@ -108,6 +116,7 @@ public class CourseNullFragment extends Fragment {
     }
 
 
+    //添加人员到课表
     private void addPeople(UNCourse unCourse, TextView[] textView) {
         //根据周数，将人员添加到其中
         for (int i = 0; i < 5; i++)
@@ -130,6 +139,41 @@ public class CourseNullFragment extends Fragment {
         binding.courseWeek6.append("\n" + mViewModel.getDate(6));
         binding.courseWeek7.append("\n" + mViewModel.getDate(7));
     }
+
+
+    //设置周数
+    private void setWeek() {
+        final Spinner spinner = new Spinner(requireContext());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item);
+        // 添加到数组
+        for (int i = 1; i < 32; i++) {
+            dataAdapter.add("第" + i + "周");
+        }
+        //添加适配器
+        spinner.setAdapter(dataAdapter);
+        //默认选第一个
+        spinner.setSelection(0, true);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext()).setTitle("设置当前周数").setView(spinner).setPositiveButton("设置", new DialogInterface.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int week = Integer.parseInt(spinner.getSelectedItem().toString().replaceAll("[^\\d]", ""));
+                SharedPreferences.Editor editor = mViewModel.getPreferences().edit();
+                editor.putBoolean("setWeek", true);
+                editor.putInt("week", week);
+                editor.putInt("year", Calendar.getInstance().get(Calendar.YEAR));
+                editor.putInt("moth", Calendar.getInstance().get(Calendar.MONTH));
+                editor.putInt("day", Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                editor.apply();
+                Toast.makeText(requireContext(), "设置成功", Toast.LENGTH_SHORT).show();
+                showUNCourse(unCourses_temp);
+                binding.courseNullWeekNums.setText(week + "周");
+            }
+        }).setNegativeButton("取消", null);
+        builder.create().show();
+    }
+
 
 
     //dp转px
