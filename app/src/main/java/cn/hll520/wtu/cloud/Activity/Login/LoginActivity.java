@@ -25,29 +25,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_login);
         mViewModel=new ViewModelProvider(this).get(LoginViewModel.class);
-        //监听
-        mViewModel.getCloudUser().observe(this, new Observer<CloudUser>() {
-            @Override
-            public void onChanged(CloudUser cloudUser) {
-                if(cloudUser.isLogin()) {
-                    Toast.makeText(LoginActivity.this, "登录成功\n上次登录时间："+cloudUser.getTIME(), Toast.LENGTH_SHORT).show();
-                    mViewModel.addUser(cloudUser.getUser());
-                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else
-                    Toast.makeText(LoginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //登录
+        restult();
         binding.loginGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uname=binding.loginUname.getText().toString();
-                String pass=binding.loginPass.getText().toString();
-                if(isCheck(uname,pass))
-                    mViewModel.setUser(uname,pass);
+                String uName=binding.loginUname.getText().toString();
+                String uPass=binding.loginPass.getText().toString();
+                if(isCheck(uName,uPass)){
+                    mViewModel.doLogin(uName,uPass);
+                }
             }
         });
         //注册
@@ -64,6 +50,26 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(LoginActivity.this, updataPassActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+
+    //结果监听
+    private void restult() {
+        mViewModel.getResultLogin().observe(this, new Observer<CloudUser.ResultLogin>() {
+            @Override
+            public void onChanged(CloudUser.ResultLogin resultLogin) {
+
+                if(resultLogin.isSuccess){
+                    //登录成功
+                    Toast.makeText(LoginActivity.this, "登录成功\n上次登录时间："+resultLogin.time, Toast.LENGTH_SHORT).show();
+                    mViewModel.addUser(resultLogin.user);
+                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else
+                    Toast.makeText(LoginActivity.this, "登录失败！用户名或密码错误"+resultLogin.MSG, Toast.LENGTH_SHORT).show();
             }
         });
     }

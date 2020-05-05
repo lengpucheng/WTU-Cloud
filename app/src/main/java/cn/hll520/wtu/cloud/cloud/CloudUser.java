@@ -1,56 +1,58 @@
 package cn.hll520.wtu.cloud.cloud;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import cn.hll520.wtu.cloud.link.DataLinkUser;
 import cn.hll520.wtu.cloud.model.User;
 
 public class CloudUser {
-    //登录状态
-    private boolean login=false;
-    //用户信息
-    private User user;
-    //上次登录时间
-    private String TIME="";
-    //登录链接
-    private DataLinkUser link=new DataLinkUser();
+    //登录结果集
+    public static class ResultLogin{
+        public boolean isSuccess=false;
+        public User user;
+        public String time;
+        public String MSG="";//错误信息
+    }
+    //登录结果
+    private MutableLiveData<ResultLogin> _resultLogin=new MutableLiveData<>();
 
-    public CloudUser(){ }
+    //获取结果
+    public LiveData<ResultLogin> getResultLogin(){return _resultLogin;}
 
-    public CloudUser(User user){
-        this.user=user;
-        login_do();
-    }
-    //查看是否登录
-    public boolean isLogin() {
-        return login;
-    }
-    //设置登录状态
-    public void setLogin(boolean login) {
-        this.login = login;
-    }
-    //获取登录用户的信息
-    public User getUser() {
-        return user;
-    }
-    //传入登录用户
-    public void setUser(User user) {
-        this.user = user;
-        login_do();
-    }
-
-    public String getTIME(){return TIME;}
 
     /*
-    * ————————————————————封装的登录工具——————————————————
+     * ——————————————————————————————————封装的对我登口——————————————————————————
+     * */
+    //登录
+    public void doLogin(User user){new login_mpl(user).execute();}
+
+
+    /*
+    * ——————————————————————————————————封装的实现方法——————————————————————————
     * */
     //登录
-    private void login_do(){
-        if(user.getUID()==0)
-            login=link.login(user.getUname(),user.getPassword());
-        else
-            login=link.login(user.getUID(),user.getPassword());
-        user=link.getUser();
-        TIME=link.getTime();
+    @SuppressLint("StaticFieldLeak")
+    private class login_mpl extends AsyncTask<Void,Void,Void>{
+        private User user;
+        login_mpl(User user){this.user=user;}
+        @Override
+        protected Void doInBackground(Void... voids) {
+            DataLinkUser link=new DataLinkUser();
+            ResultLogin result= new ResultLogin();
+            if(user.getUID()==0)
+                result.isSuccess=link.login(user.getUname(),user.getPassword());
+            else
+                result.isSuccess=link.login(user.getUID(),user.getPassword());
+            result.user=link.getUser();
+            result.time=link.getTime();
+            result.MSG=link.getMsg();
+            _resultLogin.postValue(result);
+            return null;
+        }
     }
 
 }

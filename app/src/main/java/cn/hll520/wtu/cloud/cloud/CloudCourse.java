@@ -43,7 +43,7 @@ public class CloudCourse {
     * */
     //上传
     @SuppressLint("StaticFieldLeak")
-    class UPLoadCourse extends AsyncTask<Void,Void,Void>{
+   private class UPLoadCourse extends AsyncTask<Void,Void,Void>{
         private List<UNCourse> list;
         UPLoadCourse(List<UNCourse> unCourses){this.list=unCourses;}
 
@@ -60,7 +60,7 @@ public class CloudCourse {
 
     //下载
     @SuppressLint("StaticFieldLeak")
-    class DownCourse extends AsyncTask<Void,Void,Void>{
+    private class DownCourse extends AsyncTask<Void,Void,Void>{
         private int OID;
         DownCourse(int OID){this.OID=OID;}
         @Override
