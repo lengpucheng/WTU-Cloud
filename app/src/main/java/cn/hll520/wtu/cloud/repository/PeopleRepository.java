@@ -52,6 +52,7 @@ public class PeopleRepository {
 
     //插入，存在则跟新
     public void addPeo(People... people) { new AddAsyncTask(peopleDao).execute(people); }
+    public void addPeo(List<People> people) { new addPeo_mpl(peopleDao,people).execute(); }
 
 
     //登出清空
@@ -62,7 +63,7 @@ public class PeopleRepository {
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
     //添加去重
-    public static class AddAsyncTask extends AsyncTask<People, Void, Void> {
+    static class AddAsyncTask extends AsyncTask<People, Void, Void> {
         private PeopleDao peoDao;
         //构造线程
         AddAsyncTask(PeopleDao peoDao) {
@@ -79,6 +80,28 @@ public class PeopleRepository {
             return null;
         }
     }
+
+    static class addPeo_mpl extends AsyncTask<Void,Void,Void>{
+        private List<People> peoples;
+        private PeopleDao peoDao;
+        addPeo_mpl(PeopleDao dao,List<People> peoples){
+            this.peoDao=dao;
+            this.peoples=peoples;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for(People people:peoples){
+                if (peoDao.getPeoForID(people.get_ID()) == null)
+                    peoDao.insertPeo(people);
+                else
+                    peoDao.updatePeo(people);
+            }
+            return null;
+        }
+    }
+
+
 
     //更新数据
     static class UpdateAsyncTask extends AsyncTask<People, Void, Void> {

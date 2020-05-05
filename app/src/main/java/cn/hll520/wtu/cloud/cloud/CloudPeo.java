@@ -49,8 +49,8 @@ public class CloudPeo {
         protected Void doInBackground(Void... voids) {
             DataLinkPeo link=new DataLinkPeo();
             ResultPeo result=new ResultPeo();
+            result.isOk= true;
             result.peoples= Collections.unmodifiableList(link.getPeoples(UID));
-            result.isOk=true;
             result.MSG=link.getMSG();
             _resultPeo.postValue(result);
             return null;

@@ -25,6 +25,8 @@ public class CloudCourse {
         public String MSG="";
     }
 
+    /* ——————————————————————————结果集合——————————————————————
+      */
     //上传结果
     private MutableLiveData<ResultLoad> _resultLoad =new MutableLiveData<>();
     //下载结果
@@ -43,14 +45,15 @@ public class CloudCourse {
     /*
      * ——————————————————————————对外的方法——————————————————————
      * */
-
-
     //上传课表
     public void uploadUNCourse(List<UNCourse> courses){new UPLoadCourse(courses).execute();}
-
     //下载课表
     public void downUNCourse(int OID){new DownCourse(OID).execute();}
 
+
+
+
+    
     /*
     * ——————————————————————————封装好的实现——————————————————————
     * */

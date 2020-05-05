@@ -17,6 +17,9 @@ public interface PeopleDao {
     @Insert
     void insertPeo(People... people);
 
+    @Insert
+    void insertPeo(List<People> people);
+
     @Update
     void updatePeo(People... people);
 

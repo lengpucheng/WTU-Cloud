@@ -45,6 +45,7 @@ public class PeopleViewModel extends AndroidViewModel {
     }
 
     void addPeo(People... people){ peoRepository.addPeo(people);}
+    void addPeo(List<People> people){ peoRepository.addPeo(people);}
 
     void delPeo(People... people) {
         peoRepository.delPeo(people);

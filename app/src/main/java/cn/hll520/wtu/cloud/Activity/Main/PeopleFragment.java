@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,10 +60,10 @@ public class PeopleFragment extends Fragment {
         mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<CloudPeo.ResultPeo>() {
             @Override
             public void onChanged(CloudPeo.ResultPeo resultPeo) {
+                if(!resultPeo.isOk)
+                    Toast.makeText(requireContext(), "获取联系人列表错误"+resultPeo.MSG, Toast.LENGTH_SHORT).show();
                 //写入联系人
-                for(People people:resultPeo.peoples){
-                    mViewModel.addPeo(people);
-                }
+                mViewModel.addPeo(resultPeo.peoples);
             }
         });
         //显示联系人列表
