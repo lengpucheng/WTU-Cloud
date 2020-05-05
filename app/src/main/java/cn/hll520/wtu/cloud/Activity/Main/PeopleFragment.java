@@ -9,24 +9,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.Objects;
 
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.adapter.PeoAdapter;
+import cn.hll520.wtu.cloud.cloud.CloudPeo;
 import cn.hll520.wtu.cloud.model.People;
+import cn.hll520.wtu.cloud.model.User;
 
 public class PeopleFragment extends Fragment {
 
     private PeopleViewModel mViewModel;
     private PeoAdapter adapter;
-    private LiveData<List<People>> peos;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,16 +47,28 @@ public class PeopleFragment extends Fragment {
         adapter=new PeoAdapter();
         //添加适配器
         recyclerView.setAdapter(adapter);
-        if(peos==null)
-            mViewModel.getPEO();
-        peos=mViewModel.getAllPeos();
-        //添加监听   参数生命周期，监听者
-        peos.observe(getViewLifecycleOwner(), new Observer<List<People>>() {
+        //获取用户
+        mViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                //获取联系人列表
+                mViewModel.doGetPeo(user.getUID());
+            }
+        });
+        //获取云端联系人列表
+        mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<CloudPeo.ResultPeo>() {
+            @Override
+            public void onChanged(CloudPeo.ResultPeo resultPeo) {
+                //写入联系人
+                for(People people:resultPeo.peoples){
+                    mViewModel.addPeo(people);
+                }
+            }
+        });
+        //显示联系人列表
+        mViewModel.getAllPeos().observe(getViewLifecycleOwner(), new Observer<List<People>>() {
             @Override
             public void onChanged(List<People> people) {
-                if(peos==null|| Objects.requireNonNull(peos.getValue()).size()<1)
-                    peos=mViewModel.getAllPeos();
-                //更新视图
                 adapter.submitList(people);
             }
         });

@@ -51,25 +51,23 @@ public class PeopleRepository {
     public People getPeoForUID(int UID){return  peopleDao.getPeoForUID(UID);}
 
     //插入，存在则跟新
-    public void addPeo(People... people) {
-        new AddAsyncTask(peopleDao).execute(people);
-    }
+    public void addPeo(People... people) { new AddAsyncTask(peopleDao).execute(people); }
 
 
     //登出清空
     public void out_login(){peopleDao.out_login();}
+
+
     /*——————————————————————————封装的AsynTask线程————————————————————————
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
     //添加去重
     public static class AddAsyncTask extends AsyncTask<People, Void, Void> {
         private PeopleDao peoDao;
-
         //构造线程
         AddAsyncTask(PeopleDao peoDao) {
             this.peoDao = peoDao;
         }
-
         @Override
         protected Void doInBackground(People... people) {
             for (People peo : people) {
@@ -78,7 +76,6 @@ public class PeopleRepository {
                 else
                     peoDao.updatePeo(peo);
             }
-
             return null;
         }
     }

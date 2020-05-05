@@ -17,52 +17,41 @@ import cn.hll520.wtu.cloud.repository.PeopleRepository;
 import cn.hll520.wtu.cloud.repository.UserRepository;
 
 public class PeopleViewModel extends AndroidViewModel {
-    private PeopleRepository peorepository;
+    private PeopleRepository peoRepository;
     private UserRepository userRepository;
-    private String TAG="PEO_MAIN";
+    private CloudPeo cloud=new CloudPeo();
 
     //构造函数
     public PeopleViewModel(@NonNull Application application) {
         super(application);
         //得到一个People使用接口
-        peorepository = new PeopleRepository(application);
+        peoRepository = new PeopleRepository(application);
         userRepository=new UserRepository(application);
     }
+    /*————————————————————————————初始化接口——————————————————————————
+    * */
+    //初始化结果集
+    LiveData<CloudPeo.ResultPeo> getResult(){return cloud.getResultPeo();}
+    //获取联系人列表
+    void doGetPeo(int UID){cloud.getPeoAll(UID);}
+    //获取当前用户
+    LiveData<User> getUser(){return userRepository.getLogin_User();}
 
-    //初始化
-    void getPEO(){ new getAllPEO().execute(); }
 
-
-    //————————————————————————对外提供的管理数据
+    /*———————————————————————————操作数据接口——————————————————————————-
+    * */
     LiveData<List<People>> getAllPeos() {
-        return peorepository.getAllPeos();
+        return peoRepository.getAllPeos();
     }
 
+    void addPeo(People... people){ peoRepository.addPeo(people);}
 
-    private void addPeo(People... people){
-        peorepository.addPeo(people);}
-
-    private void delPeo(People... people) {
-        peorepository.delPeo(people);
+    void delPeo(People... people) {
+        peoRepository.delPeo(people);
     }
 
-    private People getPeo_id(int _id){return peorepository.getPeoForID(_id);}
+    People getPeo_id(int _id){return peoRepository.getPeoForID(_id);}
 
-    private User getNowUser(){return userRepository.getUser_login();}
+    User getNowUser(){return userRepository.getUser_login();}
 
-
-    //——————————————————————————————封装的方法——————————————————————————————
-
-    @SuppressLint("StaticFieldLeak")
-    class getAllPEO extends AsyncTask<Void,Void,Void>{
-        @Override
-        protected Void doInBackground(Void... voids) {
-            CloudPeo cloudPeo=new CloudPeo(getNowUser().getUID());
-            //存在就更新
-            for(People peo:cloudPeo.getPeos()){
-                addPeo(peo);
-            }
-            return null;
-        }
-    }
 }

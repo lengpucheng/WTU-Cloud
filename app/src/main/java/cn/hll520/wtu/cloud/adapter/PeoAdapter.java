@@ -1,7 +1,6 @@
 package cn.hll520.wtu.cloud.adapter;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,20 @@ import cn.hll520.wtu.cloud.model.People;
 public class PeoAdapter extends ListAdapter<People, PeoAdapter.PeoViewHodel> {
 
     public PeoAdapter() {
+        //比较ID
         super(new DiffUtil.ItemCallback<People>() {
             @Override
             public boolean areItemsTheSame(@NonNull People oldItem, @NonNull People newItem) {
                 return oldItem.getUID()==newItem.getUID();
             }
-
+            //比较内容
             @Override
             public boolean areContentsTheSame(@NonNull People oldItem, @NonNull People newItem) {
-                return false;
+                return (
+                        oldItem.getName().equals(newItem.getName())&&
+                        oldItem.getPhone().equals(newItem.getPhone())&&
+                        oldItem.getMainMent().equals(newItem.getMainMent())
+                        );
             }
         });
     }
@@ -65,7 +69,7 @@ public class PeoAdapter extends ListAdapter<People, PeoAdapter.PeoViewHodel> {
         holder._ID=people.get_ID();
     }
 
-    class PeoViewHodel extends RecyclerView.ViewHolder {
+    static class PeoViewHodel extends RecyclerView.ViewHolder {
         ImageView avatar;
         TextView name,ment,bottom;
         int _ID=0;

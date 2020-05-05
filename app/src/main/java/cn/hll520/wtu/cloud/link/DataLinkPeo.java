@@ -14,15 +14,15 @@ import cn.hll520.wtu.cloud.model.People;
 public class DataLinkPeo {
     private static final String TAG = "EFF_LINK_PEO";
     private static DataLink LINK = DataLink.getLink();
-    private People people;
     private List<People> peoples=new ArrayList<>();
     private int UID;
+    private String MSG="";//信息
+
+
+    //获取信息
+    public String getMSG(){return MSG;}
+
     //————————————————————联系人接口————————————————————————
-
-    public People getPeople() {
-        return people;
-    }
-
     public List<People> getPeoples(int UID){
         this.UID=UID;
         getAllPeo();
@@ -34,9 +34,9 @@ public class DataLinkPeo {
     private void getAllPeo(){
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
             return;
         }
-
         String SQL="SELECT organ_peo.OID,user_info.UID,user_info.SID,user_info.IMG,user_info.NAME,user_info.gender," +
                 "user_info.BIRTHDAY,user_info.PHONE,user_info.QQ,user_info.EMAIL,user_info.CAMPUS," +
                 "user_info.COLLEG,user_info.CLAS,user_info.MAINORG,user_info.MAINMENT,user_info.MAINPOSITION," +
@@ -68,9 +68,12 @@ public class DataLinkPeo {
                 people.setLogin(res.getInt(18));
                 peoples.add(people);
             }
-
+            MSG="联系人获取成功";
+            res.close();
+            pres.close();
         } catch (SQLException e) {
             Log.e(TAG, "getAllPeo: ",e );
+            MSG="获取联系人列表失败";
             e.printStackTrace();
         }
 
