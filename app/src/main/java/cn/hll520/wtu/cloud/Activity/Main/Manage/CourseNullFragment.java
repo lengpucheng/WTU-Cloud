@@ -29,6 +29,7 @@ import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudCourse;
 import cn.hll520.wtu.cloud.databinding.CourseNullFragmentBinding;
 import cn.hll520.wtu.cloud.model.UNCourse;
+import cn.hll520.wtu.cloud.model.User;
 
 public class CourseNullFragment extends Fragment {
 
@@ -51,7 +52,6 @@ public class CourseNullFragment extends Fragment {
         mViewModel=new ViewModelProvider(this).get(CourseNullViewModel.class);
         //初始化
         intiDate();
-
         //监听空课表
         mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<CloudCourse.ResultDown>() {
             @Override
@@ -66,9 +66,16 @@ public class CourseNullFragment extends Fragment {
                 showUNCourse(resultDown.UNCourses);
             }
         });
-        //获取空课表
-        mViewModel.downUNCourse();
+        //监听登录人员
+        mViewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                //获取空课表
+                mViewModel.downUNCourse(user.getUID());
+            }
+        });
 
+        //设置周数
         binding.CourseNullSetWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

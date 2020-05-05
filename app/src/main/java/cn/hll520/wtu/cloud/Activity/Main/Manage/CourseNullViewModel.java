@@ -16,18 +16,23 @@ import androidx.lifecycle.LiveData;
 import java.util.Date;
 
 import cn.hll520.wtu.cloud.cloud.CloudCourse;
+import cn.hll520.wtu.cloud.model.User;
+import cn.hll520.wtu.cloud.repository.UserRepository;
 
 public class CourseNullViewModel extends AndroidViewModel {
     int week;//周
-    int weekDay;//星期
+    private int weekDay;//星期
     int avg_width;//屏幕平均宽度
     private SharedPreferences preferences;
     private static final String SHP_COURSE = "Course";//shp文件名
+    private UserRepository repository;
     private CloudCourse cloud=new CloudCourse();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public CourseNullViewModel(@NonNull Application application) {
         super(application);
+        //用户工厂
+        repository=new UserRepository(application);
         //设置一个文件保存用户偏好————设置的周数
         preferences = application.getSharedPreferences(SHP_COURSE, Context.MODE_PRIVATE);
         //获取屏幕宽度，平均为8
@@ -51,18 +56,16 @@ public class CourseNullViewModel extends AndroidViewModel {
         }
     }
 
+    //获取用户
+    LiveData<User> getUser(){return repository.getLogin_User();}
 
     //获取编辑shp对象
     SharedPreferences getPreferences() {
         return preferences;
     }
-    //获取当前的边距
-    int getLeft(int i) {
-        return (i - 1) * avg_width;
-    }
     //获取课表
     LiveData<CloudCourse.ResultDown> getResult(){return cloud.getResultDown();}
-    void downUNCourse(){cloud.downUNCourse(1001); }
+    void downUNCourse(int OID){cloud.downUNCourse(OID); }
 
     //获取星期几的日期
     @RequiresApi(api = Build.VERSION_CODES.N)
