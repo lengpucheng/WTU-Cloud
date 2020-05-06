@@ -35,7 +35,7 @@ public class PeoInfoActivity extends AppCompatActivity {
         binding= DataBindingUtil.setContentView(this,R.layout.activity_peo_info);
         mViewModel=new ViewModelProvider(this).get(PeoInfoViewModel.class);
         int _ID= getIntent().getIntExtra("_ID",0);
-        mViewModel.getPeople(_ID).observe(this, new Observer<People>() {
+        mViewModel.getInfo(_ID).observe(this, new Observer<People>() {
             @Override
             public void onChanged(People peo) {
                 //显示数据

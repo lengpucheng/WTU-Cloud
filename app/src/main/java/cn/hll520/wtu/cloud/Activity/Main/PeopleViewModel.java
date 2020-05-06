@@ -42,15 +42,7 @@ public class PeopleViewModel extends AndroidViewModel {
         return peoRepository.getAllPeos();
     }
 
-    void addPeo(People... people){ peoRepository.addPeo(people);}
+
     void addPeo(List<People> people){ peoRepository.addPeo(people);}
-
-    void delPeo(People... people) {
-        peoRepository.delPeo(people);
-    }
-
-    People getPeo_id(int _id){return peoRepository.getPeoForID(_id);}
-
-    User getNowUser(){return userRepository.getUser_login();}
 
 }

@@ -25,62 +25,38 @@ public class PeopleRepository {
     /*——————————————————————————封装的对外的使用接口——————————————————————————————
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
-
-
     //查询全部——————插入LiveData 自带了AsyncTask，不需要在定义线程实现
     public LiveData<List<People>> getAllPeos() {
         return allPeos;
     }
 
-
-
     //删除
     public void delPeo(People... people) {
-        new DeleteAsyncTask(peopleDao).execute(people);
+        new delete_mpl(peopleDao).execute(people);
     }
 
     //更新
     public void updatePeo(People... people) {
-        new UpdateAsyncTask(peopleDao).execute(people);
+        new update_mpl(peopleDao).execute(people);
     }
 
     //查询唯一 _id
-    public People getPeoForID(int _ID) { return peopleDao.getPeoForID(_ID); }
+    public LiveData<People> getInfo_ID(int _ID){return peopleDao.getInfoForID(_ID);}
 
     //查询根据UID
-    public People getPeoForUID(int UID){return  peopleDao.getPeoForUID(UID);}
+    public LiveData<People> getInfo_UID(int UID){return peopleDao.getInfoForUID(UID);}
 
     //插入，存在则跟新
-    public void addPeo(People... people) { new AddAsyncTask(peopleDao).execute(people); }
     public void addPeo(List<People> people) { new addPeo_mpl(peopleDao,people).execute(); }
 
-
     //登出清空
-    public void out_login(){peopleDao.out_login();}
+    public void outLogin(){new outLogin_mpl(peopleDao).execute();}
 
 
     /*——————————————————————————封装的AsynTask线程————————————————————————
      *————————————————一个异步线程  三个参数  对象，进度，结果————————————————
      */
     //添加去重
-    static class AddAsyncTask extends AsyncTask<People, Void, Void> {
-        private PeopleDao peoDao;
-        //构造线程
-        AddAsyncTask(PeopleDao peoDao) {
-            this.peoDao = peoDao;
-        }
-        @Override
-        protected Void doInBackground(People... people) {
-            for (People peo : people) {
-                if (peoDao.getPeoForID(peo.get_ID()) == null)
-                    peoDao.insertPeo(peo);
-                else
-                    peoDao.updatePeo(peo);
-            }
-            return null;
-        }
-    }
-
     static class addPeo_mpl extends AsyncTask<Void,Void,Void>{
         private List<People> peoples;
         private PeopleDao peoDao;
@@ -88,7 +64,6 @@ public class PeopleRepository {
             this.peoDao=dao;
             this.peoples=peoples;
         }
-
         @Override
         protected Void doInBackground(Void... voids) {
             for(People people:peoples){
@@ -104,13 +79,11 @@ public class PeopleRepository {
 
 
     //更新数据
-    static class UpdateAsyncTask extends AsyncTask<People, Void, Void> {
+    static class update_mpl extends AsyncTask<People, Void, Void> {
         private PeopleDao peoDao;
-
-        UpdateAsyncTask(PeopleDao peoDao) {
+        update_mpl(PeopleDao peoDao) {
             this.peoDao = peoDao;
         }
-
         @Override
         protected Void doInBackground(People... peoples) {
             peoDao.updatePeo(peoples);
@@ -119,16 +92,30 @@ public class PeopleRepository {
     }
 
     //删除数据
-    static class DeleteAsyncTask extends AsyncTask<People, Void, Void> {
+    static class delete_mpl extends AsyncTask<People, Void, Void> {
         private PeopleDao peoDao;
 
-        DeleteAsyncTask(PeopleDao peoDao) {
+        delete_mpl(PeopleDao peoDao) {
             this.peoDao = peoDao;
         }
 
         @Override
         protected Void doInBackground(People... peoples) {
             peoDao.deletePeo(peoples);
+            return null;
+        }
+    }
+
+    //清空
+    static class outLogin_mpl extends AsyncTask<Void,Void,Void>{
+        private PeopleDao peoDao;
+
+        outLogin_mpl(PeopleDao peoDao) {
+            this.peoDao = peoDao;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            peoDao.out_login();
             return null;
         }
     }
