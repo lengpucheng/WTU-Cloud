@@ -1,8 +1,6 @@
 package cn.hll520.wtu.cloud.Activity.Main;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

@@ -48,7 +48,7 @@ public class CloudCourse {
     //上传课表
     public void uploadUNCourse(List<UNCourse> courses){new UPLoadCourse(courses).execute();}
     //下载课表
-    public void downUNCourse(int OID){new DownCourse(OID).execute();}
+    public void downUNCourse(int MIDorOID){new DownCourse(MIDorOID).execute();}
 
 
 
@@ -77,13 +77,13 @@ public class CloudCourse {
     //下载
     @SuppressLint("StaticFieldLeak")
     private class DownCourse extends AsyncTask<Void,Void,Void>{
-        private int OID;
-        DownCourse(int OID){this.OID=OID;}
+        private int MIDorOID;
+        DownCourse(int MIDorOID){this.MIDorOID =MIDorOID;}
         @Override
         protected Void doInBackground(Void... voids) {
             DataLinkCourse link=new DataLinkCourse();
             ResultDown resultDown=new ResultDown();
-            List<UNCourse> unCourses=link.downCourse(OID);
+            List<UNCourse> unCourses=link.downCourse(MIDorOID);
             resultDown.isOk=unCourses!=null;
             resultDown.UNCourses=unCourses;
             resultDown.MSG=link.getMSG();

@@ -31,10 +31,10 @@ public class DataLinkCourse {
 
 
     /**
-     * @param OID 组织id
+     * @param MIDorOID 组织id
      * @return 返回的是空的课表
      */
-    public List<UNCourse> downCourse(int OID){return downCourse_mpl(OID);}
+    public List<UNCourse> downCourse(int MIDorOID){return downCourse_mpl(MIDorOID);}
 
 
 
@@ -85,7 +85,7 @@ public class DataLinkCourse {
     }
 
     //下载
-    private List<UNCourse> downCourse_mpl(int OID){
+    private List<UNCourse> downCourse_mpl(int MIDorOID){
         List<UNCourse> unCourses=new ArrayList<>();
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
@@ -96,10 +96,11 @@ public class DataLinkCourse {
                 "course_null.UID,user_info.NAME,course_null.WEEK,course_null.AM1_2,course_null.AM3_5,course_null.PM1_2," +
                 "course_null.PM3_4,course_null.NIGHT  " +
                 "FROM course_null LEFT JOIN user_info ON course_null.uid=user_info.UID  " +
-                "WHERE course_null.UID IN(SELECT organ_peo.UID FROM organ_peo WHERE organ_peo.OID=?)";
+                "WHERE course_null.UID IN(SELECT organ_peo.UID FROM organ_peo WHERE organ_peo.OID=? or organ_peo.MID=?)";
         try {
             PreparedStatement pres=LINK.getConnection().prepareCall(SQL);
-            pres.setInt(1,OID);
+            pres.setInt(1,MIDorOID);
+            pres.setInt(2,MIDorOID);
             ResultSet res = pres.executeQuery();
             while (res.next()){
                 UNCourse unCourse=new UNCourse();

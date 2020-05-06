@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 import java.util.Date;
 
 import cn.hll520.wtu.cloud.cloud.CloudCourse;
+import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.model.User;
 import cn.hll520.wtu.cloud.repository.UserRepository;
 
@@ -23,10 +24,12 @@ public class CourseNullViewModel extends AndroidViewModel {
     int week;//周
     private int weekDay;//星期
     int avg_width;//屏幕平均宽度
+    int OID=0;//部门号
     private SharedPreferences preferences;
     private static final String SHP_COURSE = "Course";//shp文件名
     private UserRepository repository;
     private CloudCourse cloud=new CloudCourse();
+    private CloudUser cloudUser=new CloudUser();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public CourseNullViewModel(@NonNull Application application) {
@@ -56,16 +59,22 @@ public class CourseNullViewModel extends AndroidViewModel {
         }
     }
 
+
     //获取用户
     LiveData<User> getUser(){return repository.getLogin_User();}
-
     //获取编辑shp对象
     SharedPreferences getPreferences() {
         return preferences;
     }
     //获取课表
     LiveData<CloudCourse.ResultDown> getResult(){return cloud.getResultDown();}
-    void downUNCourse(int OID){cloud.downUNCourse(OID); }
+    void downUNCourse(int MIDorOID){cloud.downUNCourse(MIDorOID); }
+    //获取组织
+    LiveData<CloudUser.ResultOrg> getOrgan(){return cloudUser.getResultOrg();}
+    void loadOrg(int UID){cloudUser.setOrg(UID);}
+    //获取部门
+    LiveData<CloudUser.ResultMent> getMent(){return cloudUser.getResultMent();}
+    void loadMent(int OID){cloudUser.setMent(OID);}
 
     //获取星期几的日期
     @RequiresApi(api = Build.VERSION_CODES.N)

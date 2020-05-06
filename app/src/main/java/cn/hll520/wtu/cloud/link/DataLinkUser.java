@@ -1,6 +1,7 @@
 package cn.hll520.wtu.cloud.link;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.util.Log;
 
 import java.sql.Date;
@@ -8,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.hll520.wtu.cloud.model.User;
 
@@ -80,6 +83,12 @@ public class DataLinkUser {
 
     //修改密码
     public boolean updataUserPass(int UID,String passKey,String newPass){return _upUser(UID,passKey,newPass);}
+
+    //返回所在组织及其名称
+    public List<ContentValues> getOrganAndName(int UID){return getOrganAndName_mpl(UID);}
+    //返回部门及其名称
+    public List<ContentValues> getMentAndName(int OID){return getMentAndName_mpl(OID);}
+
 
 
     /*
@@ -396,5 +405,70 @@ public class DataLinkUser {
     }
 
 
+
+    /*
+    * ——————————————————————————————————封装的查询实现——————————————————————————————————
+    * */
+    //返回所在组织和其名称
+    private List<ContentValues> getOrganAndName_mpl(int UID){
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return null;
+        }
+        String SQL="SELECT DISTINCT organ_peo.OID,organ.NAME FROM organ_peo  " +
+                    "LEFT JOIN organ ON organ_peo.OID=organ.OID  " +
+                    "WHERE organ_peo.UID=?";
+        try {
+            PreparedStatement pres=LINK.getConnection().prepareCall(SQL);
+            pres.setInt(1,UID);
+            ResultSet res = pres.executeQuery();
+            List<ContentValues> values=new ArrayList<>();
+            while (res.next()){
+                ContentValues cv=new ContentValues();
+                cv.put("OID",res.getInt(1));
+                cv.put("NAME",res.getString(2));
+                values.add(cv);
+            }
+            res.close();
+            pres.close();
+            return values;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.e(TAG, "获取列表失败");
+            MSG="网络列表失败";
+        }
+        return null;
+    }
+
+    //返回部门和名称
+    private List<ContentValues> getMentAndName_mpl(int OID){
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return null;
+        }
+        String SQL="SELECT DISTINCT organ_ment.MID,organ_ment.MENTNAME FROM organ_ment WHERE organ_ment.OID=?";
+        try {
+            PreparedStatement pres=LINK.getConnection().prepareCall(SQL);
+            pres.setInt(1,OID);
+            ResultSet res = pres.executeQuery();
+            List<ContentValues> values=new ArrayList<>();
+            while (res.next()){
+                ContentValues cv=new ContentValues();
+                cv.put("MID",res.getInt(1));
+                cv.put("NAME",res.getString(2));
+                values.add(cv);
+            }
+            res.close();
+            pres.close();
+            return values;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.e(TAG, "获取列表失败");
+            MSG="网络列表失败";
+        }
+        return null;
+    }
 
 }

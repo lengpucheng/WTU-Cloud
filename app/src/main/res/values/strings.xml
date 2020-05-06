@@ -119,6 +119,8 @@
     <string name="time_pm_3_4">下午\n3–4节</string>
     <string name="time_nigth">晚上\n课程</string>
     <string name="manage_course">空课表</string>
+    <string name="organ">组织</string>
+    <string name="ment">部门</string>
 
 
     <string-array name="gender">
