@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import cn.hll520.wtu.cloud.Activity.Main.MycenterActivity;
+import cn.hll520.wtu.cloud.Activity.Main.MyCenter.MycenterActivity;
 import cn.hll520.wtu.cloud.R;
 
 public class MainActivity extends AppCompatActivity {

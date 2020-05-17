@@ -11,8 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import cn.hll520.wtu.cloud.Activity.MainActivity;
-import cn.hll520.wtu.cloud.Activity.RegisteredActivity;
-import cn.hll520.wtu.cloud.Activity.updataPassActivity;
+import cn.hll520.wtu.cloud.Activity.Main.MyCenter.updataPassActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.cloud.CloudUser;
 import cn.hll520.wtu.cloud.databinding.ActivityLoginBinding;

@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/logo_r"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.updataPassActivity"></activity>
-        <activity android:name=".Activity.RegisteredActivity" />
+        <activity android:name=".Activity.Main.MyCenter.updataPassActivity"></activity>
+        <activity android:name=".Activity.Login.RegisteredActivity" />
         <activity android:name=".Activity.StartUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.Main.MycenterActivity" />
+        <activity android:name=".Activity.Main.MyCenter.MycenterActivity" />
         <activity android:name=".Activity.PeoInfoActivity" />
         <activity android:name=".Activity.Login.LoginActivity" />
         <activity android:name=".Activity.MainActivity" />

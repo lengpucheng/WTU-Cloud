@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.Main;
+package cn.hll520.wtu.cloud.Activity.Main.MyCenter;
 
 import android.app.Application;
 

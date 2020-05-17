@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity;
+package cn.hll520.wtu.cloud.Activity.Main.MyCenter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

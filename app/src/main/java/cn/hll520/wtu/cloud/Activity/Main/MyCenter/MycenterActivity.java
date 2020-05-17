@@ -1,4 +1,4 @@
-package cn.hll520.wtu.cloud.Activity.Main;
+package cn.hll520.wtu.cloud.Activity.Main.MyCenter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import cn.hll520.wtu.cloud.Activity.Login.LoginActivity;
 import cn.hll520.wtu.cloud.Activity.PeoInfoActivity;
-import cn.hll520.wtu.cloud.Activity.updataPassActivity;
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.databinding.ActivityMycenterBinding;
 import cn.hll520.wtu.cloud.model.People;
