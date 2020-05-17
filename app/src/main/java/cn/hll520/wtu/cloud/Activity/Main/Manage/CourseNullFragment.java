@@ -193,28 +193,12 @@ public class CourseNullFragment extends Fragment {
     private void showUNCourse(List<UNCourse> unCourses) {
         //生成课表占位符
         TextView[][] textViews = new TextView[7][5];
-        //初始化位置
+        //初始化
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 5; j++) {
                 textViews[i][j] = new TextView(requireContext());
                 int drawable;
-                switch ((i + j) % 4) {
-                    case 0:
-                        drawable = R.drawable.course_bk_1_ripple;
-                        break;
-                    case 1:
-                        drawable = R.drawable.course_bk_2_ripple;
-                        break;
-                    case 2:
-                        drawable = R.drawable.course_bk_3_ripple;
-                        break;
-                    case 3:
-                        drawable = R.drawable.course_bk_4_ripple;
-                        break;
-                    default:
-                        drawable = R.drawable.course_bk_noweek_ripple;
-                        break;
-                }
+                drawable=R.drawable.course_bk_uncourse_ripple;
                 //设置背景
                 textViews[i][j].setBackgroundResource(drawable);
                 //设置字体大小
@@ -227,6 +211,13 @@ public class CourseNullFragment extends Fragment {
                 textViews[i][j].setLayoutParams(params);
                 //添加
                 binding.courseNull.addView(textViews[i][j]);
+                //添加触发
+                textViews[i][j].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), "点击了", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
 
