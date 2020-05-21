@@ -76,7 +76,19 @@ public class MycenterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //编辑资料
+        binding.UpMydate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MycenterActivity.this, EditdataActivity.class);
+//                intent.putExtra("UID", mViewModel.user.getUID());
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     //获取信息
     private void getInfo(int UID) {
