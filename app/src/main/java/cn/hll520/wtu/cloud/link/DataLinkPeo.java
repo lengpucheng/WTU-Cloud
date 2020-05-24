@@ -33,6 +33,7 @@ public class DataLinkPeo {
     public People getPeo(int UID){return getPeo_mpl(UID);}
 
     //——————————————————封装的实现方法——————————————————————
+    //获取联系人列表
     private void getAllPeo(){
         if (LINK.getConnection() == null) {
             Log.e(TAG, "获取链接失败");
@@ -73,6 +74,10 @@ public class DataLinkPeo {
             MSG="联系人获取成功";
             res.close();
             pres.close();
+            //添加自己
+            People people=getPeo_mpl(UID);
+            if(people!=null)
+                peoples.add(people);//如果不为空就添加自己
         } catch (SQLException e) {
             Log.e(TAG, "getAllPeo: ",e );
             MSG="获取联系人列表失败";
@@ -90,8 +95,8 @@ public class DataLinkPeo {
         }
         String SQL="SELECT 0,user_info.UID,user_info.SID,user_info.IMG,user_info.NAME,user_info.gender," +
                 "user_info.BIRTHDAY,user_info.PHONE,user_info.QQ,user_info.EMAIL,user_info.CAMPUS,user_info.COLLEG," +
-                "user_info.CLAS,user_info.MAINORG,user_info.MAINMENT,user_info.MAINPOSITION,user_info.REGTIME," +
-                "user_info.LOGIN FROM user_info WHERE uid=?";
+                "user_info.CLAS,'自己','个人资料','个人',user_info.REGTIME,user_info.LOGIN  " +
+                "FROM user_info WHERE uid=?";
         try {
             PreparedStatement pres = LINK.getConnection().prepareStatement(SQL);
             pres.setInt(1,UID);

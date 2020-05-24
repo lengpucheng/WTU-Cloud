@@ -109,7 +109,8 @@ public class MycenterActivity extends AppCompatActivity {
                     return;
                 mViewModel.people=people;
                 binding.myCenterName.setText(people.getName());
-                binding.MyTime.setText("注册时间："+people.getRegTime());
+                binding.MyTime.setText("注册时间："+
+                        (people.getRegTime().length()>10?people.getRegTime().substring(0,10):people.getRegTime()));
             }
         });
     }
