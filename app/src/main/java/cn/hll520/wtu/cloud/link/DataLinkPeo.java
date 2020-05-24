@@ -32,7 +32,45 @@ public class DataLinkPeo {
     //获取单个信息
     public People getPeo(int UID){return getPeo_mpl(UID);}
 
+    //修改联系人信息
+    public boolean updataPeo(People people){return updataPeo_mpl(people);}
+
     //——————————————————封装的实现方法——————————————————————
+    //修改联系人资料
+    private boolean updataPeo_mpl(People people) {
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return false;
+        }
+        String SQL="UPDATE user_info SET name=?,GENDER=?,EMAIL=?,PHONE=?,QQ=?,BIRTHDAY=?,CAMPUS=?,COLLEG=?,CLAS=?,HOUSE=?" +
+                "  WHERE UID=?";
+        try {
+            PreparedStatement pres = LINK.getConnection().prepareStatement(SQL);
+            pres.setString(1,people.getName());
+            pres.setString(2,people.getGender());
+            pres.setString(3,people.getEmail());
+            pres.setString(4,people.getPhone());
+            pres.setString(5,people.getQQ());
+            pres.setString(6,people.getBirthday());
+            pres.setString(7,people.getCampus());
+            pres.setString(8,people.getCollege());
+            pres.setString(9,people.getClas());
+            pres.setString(10,people.getHouse());
+            pres.setInt(11,people.getUID());
+            pres.execute();
+            pres.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.e(TAG, "updataPeo_mpl: ",e );
+            MSG="修改失败";
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
     //获取联系人列表
     private void getAllPeo(){
         if (LINK.getConnection() == null) {

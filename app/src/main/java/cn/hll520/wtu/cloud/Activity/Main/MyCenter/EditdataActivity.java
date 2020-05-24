@@ -2,6 +2,7 @@ package cn.hll520.wtu.cloud.Activity.Main.MyCenter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import cn.hll520.wtu.cloud.R;
+import cn.hll520.wtu.cloud.cloud.CloudPeo;
 import cn.hll520.wtu.cloud.databinding.ActivityEditdataBinding;
 import cn.hll520.wtu.cloud.model.People;
 
@@ -30,6 +32,19 @@ public class EditdataActivity extends AppCompatActivity {
         clickBirth();
         //按钮事件
         click();
+        //监听修改
+        mViewModel.getResult().observe(this, new Observer<CloudPeo.Result>() {
+            @Override
+            public void onChanged(CloudPeo.Result result) {
+                if(!result.isOk)
+                    return;
+                if(result.result){
+                    Toast.makeText(EditdataActivity.this, "修改成功!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else
+                    Toast.makeText(EditdataActivity.this, "修改失败："+result.MSG, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -53,9 +68,39 @@ public class EditdataActivity extends AppCompatActivity {
         binding.editOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //获取新的信息
+                getNewInfor();
+                //执行操作
+                mViewModel.updata();
             }
         });
+    }
+
+
+    //获取新信息
+    private void getNewInfor() {
+        //UID
+        mViewModel.newPeople.setUID(mViewModel.people.getUID());
+        //姓名
+        mViewModel.newPeople.setName(binding.editName.getText().toString());
+        //性别
+        mViewModel.newPeople.setGender(binding.editGender.getSelectedItem().toString());
+        //电子邮件
+        mViewModel.newPeople.setEmail(binding.editEmail.getText().toString());
+        //电话
+        mViewModel.newPeople.setPhone(binding.editPhone.getText().toString());
+        //QQ
+        mViewModel.newPeople.setQQ(binding.editQQ.getText().toString());
+        //生日
+        mViewModel.newPeople.setBirthday(mViewModel.birthday);
+        //校区
+        mViewModel.newPeople.setCampus(binding.editCampus.getSelectedItem().toString());
+        //学院
+        mViewModel.newPeople.setCollege(binding.editCollege.getSelectedItem().toString());
+        //班级
+        mViewModel.newPeople.setClas(binding.editClass.getText().toString());
+        //宿舍
+        mViewModel.newPeople.setHouse(binding.editHouse.getText().toString());
     }
 
     //点击生日
@@ -67,6 +112,8 @@ public class EditdataActivity extends AppCompatActivity {
                     //打开日期
                     binding.ediBirthday.setVisibility(View.VISIBLE);
                     //设置日期
+                   if(mViewModel.birthday.length()<=8)
+                       mViewModel.birthday="2020-04-04";
                     String[] datas= mViewModel.birthday.split("-");
                     binding.ediBirthday.updateDate(Integer.parseInt(datas[0]),Integer.parseInt(datas[1])-1,Integer.parseInt(datas[2]));
                     binding.ediBirthdayOk.setText("确定");

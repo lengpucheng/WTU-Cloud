@@ -23,12 +23,19 @@ public class CloudPeo {
 
     //联系人
     public  static class ResultPeo{
-        public boolean isOK=false;
+        boolean isOK=false;
         public People people;
         public String MSG="";
     }
     private MutableLiveData<ResultPeo> _resultPeo=new MutableLiveData<>();
 
+    //修改资料
+    public  static class Result{
+        public boolean isOk=false;
+        public boolean result;
+        public String MSG="";
+    }
+    private MutableLiveData<Result> _result=new MutableLiveData<>();
 
     public CloudPeo(){}
     /*
@@ -38,7 +45,8 @@ public class CloudPeo {
     public LiveData<ResultPeos> getResultPeos(){return _resultPeos;}
     //单个联系人
     public LiveData<ResultPeo> getResultPeo(){return _resultPeo;}
-
+    //操作结果
+    public LiveData<Result> getResult(){return _result;}
 
     /*
      * ——————————————————————————————————封装的对外登口——————————————————————————
@@ -48,6 +56,9 @@ public class CloudPeo {
 
     //获取单个联系人
     public void getPeo(int UID){new getPeo_mpl(UID).execute();}
+
+    //修改资料
+    public void updataPeo(People people){new updataPeo_mpl(people).execute();}
 
 
     /*
@@ -87,5 +98,21 @@ public class CloudPeo {
         }
     }
 
+    //修改资料
+    @SuppressLint("StaticFieldLeak")
+    private class updataPeo_mpl extends AsyncTask<Void, Void,Void>{
+        private People people;
+        updataPeo_mpl(People people){this.people=people;}
+        @Override
+        protected Void doInBackground(Void... voids) {
+            DataLinkPeo link=new DataLinkPeo();
+            Result result=new Result();
+            result.isOk=true;
+            result.result=link.updataPeo(people);
+            result.MSG=link.getMSG();
+            _result.postValue(result);
+            return null;
+        }
+    }
 
 }
