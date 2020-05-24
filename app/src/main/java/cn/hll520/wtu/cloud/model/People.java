@@ -1,11 +1,14 @@
 package cn.hll520.wtu.cloud.model;
 
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "PEOPLE_INFO")
-public class People {
+public class People  implements Serializable {
     @PrimaryKey
     private int _ID=0;//主键=who+UID
     @ColumnInfo
@@ -66,7 +69,7 @@ public class People {
     public void setWho(int who) {
         this.who = who;
         //拼合
-        _ID= Integer.parseInt(String.valueOf(who)+String.valueOf(UID));
+        _ID= Integer.parseInt(who +String.valueOf(UID));
     }
 
     public int getUID() {
@@ -75,7 +78,7 @@ public class People {
 
     public void setUID(int UID) {
         this.UID = UID;
-        _ID= Integer.parseInt(String.valueOf(who)+String.valueOf(UID));
+        _ID= Integer.parseInt(who +String.valueOf(UID));
     }
 
     public int getSID() {
@@ -225,6 +228,7 @@ public class People {
     public void setLogin(int isLogin){
         this.login=(isLogin==1);
     }
+
 
     @Override
     public String toString() {

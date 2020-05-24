@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.io.Serializable;
+
 import cn.hll520.wtu.cloud.Activity.Login.LoginActivity;
 import cn.hll520.wtu.cloud.Activity.PeoInfoActivity;
 import cn.hll520.wtu.cloud.R;
@@ -36,6 +38,13 @@ public class MycenterActivity extends AppCompatActivity {
             }
         });
 
+        //点击事件
+        click();
+
+    }
+
+    //点击事件
+    private void click() {
         //返回
         binding.MyCradBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +91,12 @@ public class MycenterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MycenterActivity.this, EditdataActivity.class);
-//                intent.putExtra("UID", mViewModel.user.getUID());
+                intent.putExtra("UID", mViewModel.user.getUID());
+                intent.putExtra("People", mViewModel.people);
                 startActivity(intent);
             }
         });
     }
-
 
 
     //获取信息

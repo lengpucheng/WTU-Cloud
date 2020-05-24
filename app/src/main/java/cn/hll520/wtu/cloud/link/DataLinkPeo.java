@@ -29,6 +29,8 @@ public class DataLinkPeo {
         return peoples;
     }
 
+    //获取单个信息
+    public People getPeo(int UID){return getPeo_mpl(UID);}
 
     //——————————————————封装的实现方法——————————————————————
     private void getAllPeo(){
@@ -76,8 +78,53 @@ public class DataLinkPeo {
             MSG="获取联系人列表失败";
             e.printStackTrace();
         }
+    }
 
-
+    //获取单个联系人信息
+    private People getPeo_mpl(int UID){
+        People people=new People();
+        if (LINK.getConnection() == null) {
+            Log.e(TAG, "获取链接失败");
+            MSG="网络链接失败";
+            return null;
+        }
+        String SQL="SELECT 0,user_info.UID,user_info.SID,user_info.IMG,user_info.NAME,user_info.gender," +
+                "user_info.BIRTHDAY,user_info.PHONE,user_info.QQ,user_info.EMAIL,user_info.CAMPUS,user_info.COLLEG," +
+                "user_info.CLAS,user_info.MAINORG,user_info.MAINMENT,user_info.MAINPOSITION,user_info.REGTIME," +
+                "user_info.LOGIN FROM user_info WHERE uid=?";
+        try {
+            PreparedStatement pres = LINK.getConnection().prepareStatement(SQL);
+            pres.setInt(1,UID);
+            ResultSet res = pres.executeQuery();
+            while (res.next()){
+                people.setWho(res.getInt(1));
+                people.setUID(res.getInt(2));
+                people.setSID(res.getInt(3));
+                people.setImg(res.getString(4));
+                people.setName(res.getString(5));
+                people.setGender(res.getString(6));
+                people.setBirthday(res.getString(7));
+                people.setPhone(res.getString(8));
+                people.setQQ(res.getString(9));
+                people.setEmail(res.getString(10));
+                people.setCampus(res.getString(11));
+                people.setCollege(res.getString(12));
+                people.setClas(res.getString(13));
+                people.setMainOrg(res.getString(14));
+                people.setMainMent(res.getString(15));
+                people.setMainPositior(res.getString(16));
+                people.setRegTime(res.getString(17));
+                people.setLogin(res.getInt(18));
+            }
+            MSG="获取成功";
+            res.close();
+            pres.close();
+        } catch (SQLException e) {
+            Log.e(TAG, "getPeo_mpl: ",e );
+            MSG="获取联系人列表失败";
+            e.printStackTrace();
+        }
+        return people;
     }
 
 }

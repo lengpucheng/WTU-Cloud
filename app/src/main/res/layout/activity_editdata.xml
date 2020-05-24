@@ -423,7 +423,7 @@
                     android:background="@drawable/box_border_selector">
 
                     <Button
-                        android:id="@+id/reg_ok"
+                        android:id="@+id/edit_ok"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginStart="75dp"

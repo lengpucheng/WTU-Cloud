@@ -29,7 +29,7 @@ public class PeopleViewModel extends AndroidViewModel {
     /*————————————————————————————初始化接口——————————————————————————
     * */
     //初始化结果集
-    LiveData<CloudPeo.ResultPeo> getResult(){return cloud.getResultPeo();}
+    LiveData<CloudPeo.ResultPeos> getResult(){return cloud.getResultPeos();}
     //获取联系人列表
     void doGetPeo(int UID){cloud.getPeoAll(UID);}
     //获取当前用户

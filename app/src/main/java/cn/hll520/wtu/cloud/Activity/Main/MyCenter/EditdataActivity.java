@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import cn.hll520.wtu.cloud.R;
 import cn.hll520.wtu.cloud.databinding.ActivityEditdataBinding;
+import cn.hll520.wtu.cloud.model.People;
 
 public class EditdataActivity extends AppCompatActivity {
 
@@ -20,6 +22,8 @@ public class EditdataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_editdata);
         mViewModel =new ViewModelProvider(this).get(EditdataViewModel.class);
+        //获取信息
+        getInfo();
         //初始化
         initial();
         //点击生日
@@ -29,6 +33,12 @@ public class EditdataActivity extends AppCompatActivity {
 
     }
 
+    //获取用户信息
+    private void getInfo() {
+        //获取用户
+        mViewModel.people= (People) getIntent().getSerializableExtra("People");
+    }
+
     //按钮事件
     private void click() {
         //返回键
@@ -36,6 +46,14 @@ public class EditdataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        //保存按钮
+        binding.editOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -85,7 +103,7 @@ public class EditdataActivity extends AppCompatActivity {
         binding.ediBirthdayOk.setText(mViewModel.birthday);
         //校区
         String[] campus=getResources().getStringArray(R.array.campus);
-        binding.editCampus.setSelection(0);//默认选第一个
+        binding.editCampus.setSelection(campus.length-1);//默认选第最后一个
         for(int i=0;i<campus.length;i++)
             if(campus[i].equals(mViewModel.people.getCampus())){
                 binding.editCampus.setSelection(i);//如果有相同的就选中它
@@ -93,7 +111,7 @@ public class EditdataActivity extends AppCompatActivity {
             }
         //学院
         String[] college=getResources().getStringArray(R.array.college);
-        binding.editCollege.setSelection(0);//默认选第一个
+        binding.editCollege.setSelection(college.length-1);//默认选第最后一个
         for(int i=0;i<college.length;i++)
             if(college[i].equals(mViewModel.people.getCollege())){
                 binding.editCollege.setSelection(i);//如果有相同的就选中它

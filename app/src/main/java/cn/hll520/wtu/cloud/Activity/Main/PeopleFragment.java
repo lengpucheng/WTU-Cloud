@@ -56,16 +56,18 @@ public class PeopleFragment extends Fragment {
                 mViewModel.doGetPeo(user.getUID());
             }
         });
+
         //获取云端联系人列表
-        mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<CloudPeo.ResultPeo>() {
+        mViewModel.getResult().observe(getViewLifecycleOwner(), new Observer<CloudPeo.ResultPeos>() {
             @Override
-            public void onChanged(CloudPeo.ResultPeo resultPeo) {
-                if(!resultPeo.isOk)
-                    Toast.makeText(requireContext(), "获取联系人列表错误"+resultPeo.MSG, Toast.LENGTH_SHORT).show();
+            public void onChanged(CloudPeo.ResultPeos resultPeos) {
+                if(!resultPeos.isOk)
+                    Toast.makeText(requireContext(), "获取联系人列表错误"+ resultPeos.MSG, Toast.LENGTH_SHORT).show();
                 //写入联系人
-                mViewModel.addPeo(resultPeo.peoples);
+                mViewModel.addPeo(resultPeos.peoples);
             }
         });
+
         //显示联系人列表
         mViewModel.getAllPeos().observe(getViewLifecycleOwner(), new Observer<List<People>>() {
             @Override
