@@ -106,6 +106,8 @@ public class CourseNullFragment extends Fragment {
                 }
                 //加载组织
                 loadOrg(resultOrg.org);
+                //加载部门
+                loadMent(null);
             }
         });
         //监听部门选项
@@ -113,7 +115,7 @@ public class CourseNullFragment extends Fragment {
             @Override
             public void onChanged(CloudUser.ResultMent resultMent) {
                 //部门加载
-                if(!resultMent.isOK){
+                if (!resultMent.isOK) {
                     Toast.makeText(requireContext(), "获取部门列表失败" + resultMent.MSG, Toast.LENGTH_SHORT).show();
                     binding.courseNullMent.setEnabled(false);
                     return;
@@ -124,16 +126,16 @@ public class CourseNullFragment extends Fragment {
         });
     }
 
-    //加载部门
+    //加载部门选项
     private void loadMent(final List<ContentValues> values) {
         ArrayAdapter<String> mentAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item);
         //默认第一个为全部
         mentAdapter.add("全部");
-        if(values.size()>0) {
+        if (values!=null&&values.size() > 0) {
             for (ContentValues cv : values)
                 mentAdapter.add(cv.getAsString("NAME"));
             binding.courseNullMent.setEnabled(true);
-        }else
+        } else
             binding.courseNullMent.setEnabled(false);
         binding.courseNullMent.setAdapter(mentAdapter);
         binding.courseNullMent.setSelection(0);
@@ -141,10 +143,12 @@ public class CourseNullFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //获取课表，注意第一个是全部
-                if(position==0)
+                if (position == 0)
                     mViewModel.downUNCourse(mViewModel.OID);
-                else
-                    mViewModel.downUNCourse(values.get(position-1).getAsInteger("MID"));
+                else {
+                    assert values != null;
+                    mViewModel.downUNCourse(values.get(position - 1).getAsInteger("MID"));
+                }
             }
 
             @Override
@@ -154,19 +158,21 @@ public class CourseNullFragment extends Fragment {
         });
     }
 
-    //加载选项
-    private void loadOrg(final List<ContentValues> values ) {
+    //加载组织选项
+    private void loadOrg(final List<ContentValues> values) {
         //生成应该数组适配器
         ArrayAdapter<String> orgAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item);
-        if (values.size() > 0) {
+        if (values!=null&&values.size() > 0) {
             //加载列表
             for (ContentValues cv : values)
                 orgAdapter.add(cv.getAsString("NAME"));
             //启用选项
             binding.courseNullOrg.setEnabled(true);
-        }else{
+        } else {
             orgAdapter.add("暂无");
             binding.courseNullOrg.setEnabled(false);
+            //没有部门直接退出
+            Toast.makeText(getContext(), "当前未加入任何组织", Toast.LENGTH_SHORT).show();
         }
         //设置适配器
         binding.courseNullOrg.setAdapter(orgAdapter);
@@ -175,12 +181,16 @@ public class CourseNullFragment extends Fragment {
             //选择改变
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //保存当前部门号
-                mViewModel.OID=values.get(position).getAsInteger("OID");
-                //获取部门
-                mViewModel.loadMent(mViewModel.OID);
-
+                //当组织数量大于0的时候显示
+                assert values != null;
+                if (values.size() > 0) {
+                    //保存当前部门号
+                    mViewModel.OID = values.get(position).getAsInteger("OID");
+                    //获取部门
+                    mViewModel.loadMent(mViewModel.OID);
+                }
             }
+
             //没有被选择
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -198,7 +208,7 @@ public class CourseNullFragment extends Fragment {
             for (int j = 0; j < 5; j++) {
                 textViews[i][j] = new TextView(requireContext());
                 int drawable;
-                drawable=R.drawable.course_bk_uncourse_ripple;
+                drawable = R.drawable.course_bk_uncourse_ripple;
                 //设置背景
                 textViews[i][j].setBackgroundResource(drawable);
                 //设置字体大小
