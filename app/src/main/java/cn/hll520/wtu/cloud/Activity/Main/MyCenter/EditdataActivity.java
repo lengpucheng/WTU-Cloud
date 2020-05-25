@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import cn.hll520.wtu.cloud.model.People;
 
 public class EditdataActivity extends AppCompatActivity {
 
+    private String TAG="test_edit";
     private ActivityEditdataBinding binding;
     private EditdataViewModel mViewModel;
     private boolean birthday=true;
@@ -52,6 +54,8 @@ public class EditdataActivity extends AppCompatActivity {
     private void getInfo() {
         //获取用户
         mViewModel.people= (People) getIntent().getSerializableExtra("People");
+        assert mViewModel.people != null;
+        Log.d(TAG, "getInfo: "+mViewModel.people.toString());//测试
     }
 
     //按钮事件
@@ -70,6 +74,7 @@ public class EditdataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //获取新的信息
                 getNewInfor();
+                Log.d(TAG, "onClick: "+mViewModel.newPeople.toString());//测试
                 //执行操作
                 mViewModel.updata();
             }
@@ -112,7 +117,7 @@ public class EditdataActivity extends AppCompatActivity {
                     //打开日期
                     binding.ediBirthday.setVisibility(View.VISIBLE);
                     //设置日期
-                   if(mViewModel.birthday.length()<=8)
+                   if(mViewModel.birthday.length()<8)
                        mViewModel.birthday="2020-04-04";
                     String[] datas= mViewModel.birthday.split("-");
                     binding.ediBirthday.updateDate(Integer.parseInt(datas[0]),Integer.parseInt(datas[1])-1,Integer.parseInt(datas[2]));
