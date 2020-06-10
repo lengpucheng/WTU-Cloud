@@ -136,6 +136,34 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/verified"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/box_border_selector"
+                        android:clickable="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/ico"
+                            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="4"
+                            android:gravity="center_vertical"
+                            android:text="@string/verified"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                    <LinearLayout
                         android:id="@+id/UpMydate"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"

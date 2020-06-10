@@ -37,7 +37,6 @@ public class MycenterActivity extends AppCompatActivity {
                 getInfo(user.getUID());
             }
         });
-
         //点击事件
         click();
 
@@ -93,6 +92,16 @@ public class MycenterActivity extends AppCompatActivity {
                 Intent intent=new Intent(MycenterActivity.this, EditdataActivity.class);
                 intent.putExtra("UID", mViewModel.user.getUID());
                 intent.putExtra("People", mViewModel.people);
+                startActivity(intent);
+            }
+        });
+
+        //实名认证
+        binding.verified.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MycenterActivity.this, EditdataActivity.class);
+                intent.putExtra("UID", mViewModel.user.getUID());
                 startActivity(intent);
             }
         });
